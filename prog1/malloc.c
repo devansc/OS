@@ -16,7 +16,8 @@ AllocUnit *startHeap;
 void init() {
     if (startHeap == NULL) {
         printf("initialized startHeap\n");
-        startHeap = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), ALLOCBLOCKSIZE);
+        startHeap = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), 
+                ALLOCBLOCKSIZE);
     }
 }
 
@@ -30,7 +31,8 @@ int debugMalloc() {
 void printHeap(AllocUnit *cur) {
     printf("HEAP:\n");
     while (cur != NULL) {
-        printf("   %p, %zu, %s\n", cur->memLoc, cur->size, cur->isFree ? "free" : "used");
+        printf("   %p, %zu, %s\n", cur->memLoc, cur->size, 
+                cur->isFree ? "free" : "used");
         cur = cur->next;
     }
 }
