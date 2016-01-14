@@ -1,0 +1,13 @@
+all: malloc libmalloc testMalloc
+
+malloc: malloc.h malloc.c
+	gcc -g -Wall -ansi -c malloc.c
+
+libmalloc: malloc.o
+	ar r libmalloc.a malloc.o
+
+testMalloc: malloc.o testMalloc.c libmalloc.a
+	gcc testMalloc.c -L. -lmalloc -o testMalloc
+
+clean:
+	rm malloc.o libmalloc.a testMalloc
