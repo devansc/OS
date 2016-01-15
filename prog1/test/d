@@ -1,0 +1,8 @@
+#!/bin/csh
+
+foreach d (  03_malloc_use 04_malloc_a_few 05_malloc_a_lot 06_realloc_once 07_realloc_a_few 08_malloc_free 09_malloc_several_free 10_malloc_realloc 11_mallocs_reallocs 12_malloc_sizes 13_calloc_sizes 14_malloc_free_loop 15_malloc_really_big ) 
+  mkdir $d
+  cp 01_linkit_malloc/linkit.c $d/prog.c
+  sed 's/01_linkit_malloc/'$d'/' 01_linkit_malloc/Makefile | sed 's/linkit./prog./g' > $d/Makefile
+  cp 01_linkit_malloc/Description $d
+end

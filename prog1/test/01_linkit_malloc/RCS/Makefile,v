@@ -1,0 +1,59 @@
+head	1.1;
+access;
+symbols;
+locks
+	pnico:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2012.06.09.17.30.01;	author pnico;	state Exp;
+branches;
+next	;
+
+
+desc
+@initial revision
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@SHELL = /bin/sh
+
+CC 	= gcc
+
+LD 	= gcc
+
+CFLAGS 	= -g -Wall -I$(LIBDIR) -I../common
+
+LDFLAGS = -g -Wall -L$(LIBDIR) -lmalloc
+
+PROG 	= 01_linkit_malloc 
+
+OBJS 	= 
+
+REFFILE	= $(PROG).expected
+
+LIBDIR 	= ../../lib
+
+all:   $(REFFILE).out 
+
+prog: $(PROG)
+
+$(REFFILE).out: $(PROG) 
+	@@echo -n Regenerating $@@...
+	@@LD_LIBRARY_PATH=$(LIBDIR):$$LD_LIBRARY_PATH;\
+	  export LD_LIBRARY_PATH;\
+	  $(PROG) > $(REFFILE).out 2> $(REFFILE).err
+	@@echo done.
+
+clean:
+	-rm -f $(OBJS) *~
+
+allclean: clean
+	-rm -f $(PROG) $(REFFILE)
+@

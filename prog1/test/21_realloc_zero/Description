@@ -1,0 +1,4 @@
+Call malloc() and realloc(ptr,0) 10000000 times
+
+realloc(ptr,0) should act as free(ptr)
+

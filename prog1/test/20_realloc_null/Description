@@ -1,0 +1,3 @@
+check realloc(NULL,size) equiv. malloc(size)
+
+Test realloc(NULL,size) to see if it can properly allocate many regions.

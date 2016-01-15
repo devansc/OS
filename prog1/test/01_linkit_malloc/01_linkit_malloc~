@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+#find libmalloc
+
+$path = $ENV{"LD_LIBRARY_PATH"};
+if ( "$path" eq "" ) {
+    $path=".";
+} 
+foreach $d ( split(/:/,$path) ) {
+  # print "Searching $d\n"; 
+  $libmalloc = "$d/libmalloc.so";
+  last if ( -f $libmalloc ) ;
+}
+
+#search it
+open (IN,"nm $libmalloc|") or die "unable to open library libmalloc.so.";
+
+
+@lookfor = ("malloc","calloc","realloc","free");
+
+%found = ();
+
+
+
+
+
+# check to see if each of them exists
+while ( $line = <IN> ) {
+    if ( $line =~ /T (\w+)\s*$/ ) {
+	$found{$1}=1;
+    }
+
+}
+
+close(IN);
+
+#foreach $k ( keys %found ) {
+#    print "  $k\n";
+#}
+
+print "Required functions:\n";
+foreach $f ( @lookfor ) {
+    printf "%10s...%s\n",$f."()", $found{$f}?"found.":"not found.";
+}

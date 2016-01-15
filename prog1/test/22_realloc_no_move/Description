@@ -1,0 +1,3 @@
+A realloc() that should not move the buffer
+
+

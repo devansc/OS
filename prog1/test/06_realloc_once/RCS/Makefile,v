@@ -1,0 +1,63 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2012.06.09.17.30.01;	author pnico;	state Exp;
+branches;
+next	;
+
+
+desc
+@initial revision
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@SHELL = /bin/sh
+
+CC 	= gcc
+
+LD 	= gcc
+
+CFLAGS 	= -g -Wall -I$(LIBDIR) -I../common
+
+LDFLAGS = -g -Wall -L$(LIBDIR) -L$(BACKSTOPDIR) -lmalloc -lbackstop
+
+PROG 	= 06_realloc_once
+
+OBJS 	= prog.o ../common/lib.o
+
+REFFILE	= $(PROG).expected
+
+LIBDIR 	= ../../lib
+
+BACKSTOPDIR = ../../backstop
+
+all:	$(REFFILE).out 
+
+prog: $(PROG)
+
+$(PROG): $(OBJS)
+	$(LD) $(LDFLAGS) -o $@@ $^
+
+$(REFFILE).out: $(PROG) 
+	@@echo -n Regenerating $@@...
+	@@LD_LIBRARY_PATH=$(LIBDIR):$(BACKSTOPDIR):$$LD_LIBRARY_PATH;\
+	  export LD_LIBRARY_PATH;\
+	  $(PROG) > $(REFFILE).out 2> $(REFFILE).err
+	@@echo done.
+
+clean:
+	-rm -f $(OBJS) *~
+
+allclean: clean
+	-rm -f $(PROG) $(REFFILE)
+@

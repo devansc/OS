@@ -1,0 +1,4 @@
+Linking (only) against required routines
+
+This program links against all required routines, but doesn't 
+call any of them.  It's a quick test for compliance.

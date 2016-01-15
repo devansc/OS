@@ -1,0 +1,10 @@
+Allocating a region of size 500...ok.
+Allocating a region of size 1000...ok.
+Allocating a region of size 1500...ok.
+Allocating a region of size 2000...ok.
+Allocating a region of size 2500...ok.
+Free ok. Checking remaining regions...(ok.ok.ok.ok.)
+Free ok. Checking remaining regions...(ok.ok.ok.)
+Free ok. Checking remaining regions...(ok.ok.)
+Free ok. Checking remaining regions...(ok.)
+Free ok. Checking remaining regions...()
