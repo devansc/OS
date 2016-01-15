@@ -1,0 +1,4 @@
+export LD_PRELOAD=
+make
+export LD_PRELOAD=$(pwd)/libmalloc.so
+ls
