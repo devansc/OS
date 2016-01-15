@@ -57,8 +57,9 @@ void * realloc(void *ptr, size_t size) {
     AllocUnit *au, *newAU;
     size_t paddedSize;
 
-    if (size == 0 && ptr != NULL) {
+    if (size == 0) {
         free(ptr);
+        return NULL;
     }
     paddedSize = padSize(size);
     if (DEBUG)
@@ -163,9 +164,7 @@ AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
 
 void * malloc(size_t size) {
     if (DEBUG)
-        printf("malloc\n");
-    if (DEBUG)
-        printf("before malloc - ");
+        printf("malloc -- \n");
     if (DEBUG)
         printHeap(startHeap);
     AllocUnit *au = allocateNew(size);
@@ -196,9 +195,7 @@ AllocUnit *allocateNew(size_t size) {
 
 void free(void *ptr) {
     if (DEBUG)
-        printf("free\n");
-    if (DEBUG)
-        printf("before free - ");
+        printf("free -- ");
     if (DEBUG)
         printHeap(startHeap);
     if (ptr == NULL) return;
@@ -335,7 +332,7 @@ AllocUnit *newAllocUnit(uintptr_t location, size_t size_block) {
 size_t padSize(size_t size) {
     if (DEBUG)
         printf("padSize\n");
-    /*if (size % 16 == 0) return size;*/
+    if (size % 16 == 0) return size;
     size = size / PADSIZE;
     size = size + 1;
     return size * PADSIZE;
