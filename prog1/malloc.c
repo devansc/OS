@@ -99,6 +99,7 @@ AllocUnit *reallocate(AllocUnit *au, size_t size) {
         printf("reallocate\n");
     if (au->size >= size) {
         au->size = size;
+        au->isFree = 0;
         return au; /*all we have to do here?*/
     }
     if (au->next != NULL && au->next->isFree) {
@@ -207,7 +208,7 @@ void unfreeAU(AllocUnit *au, size_t size) {
     if (DEBUG)
         printf("unfreeAU\n");
 
-    location = (uintptr_t)au->memLoc + size;
+    location = (uintptr_t)au->memLoc + sizeof(AllocUnit);
     au->size = size;
     au->isFree = 0;
     if (freeSpace > 0 && freeSpace >= sizeof(AllocUnit) + PADSIZE) {
