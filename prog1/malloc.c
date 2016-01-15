@@ -32,8 +32,8 @@ int debugMalloc() {
 void printHeap(AllocUnit *cur) {
     printf("HEAP:\n");
     while (cur != NULL) {
-        printf("   %p-%p, %zu, %s\n", cur->memLoc, cur->memLoc+cur->size, cur->size, 
-            cur->isFree ? "free" : "used");
+        printf("   %p-%p, %zu, %s\n", cur->memLoc, cur->memLoc+cur->size, 
+            cur->size, cur->isFree ? "free" : "used");
         cur = cur->next;
     }
 }
@@ -149,7 +149,7 @@ AllocUnit *reallocate(AllocUnit *au, size_t size) {
 
 AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
     uintptr_t loc = (uintptr_t) cur->memLoc;
-    if (DEBUG)
+    /*if (DEBUG)*/
         /*printf("findAU\n");*/
     if (ptr < loc + cur->size && ptr >= loc) {
         return cur;
@@ -269,7 +269,7 @@ void unfreeAU(AllocUnit *au, size_t size) {
 
 AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
     AllocUnit *newAU;
-    if (DEBUG)
+    /*if (DEBUG)*/
         /*printf("getFreeAU\n");*/
 
     if (cur->size >= sizeWanted && cur->isFree) {
