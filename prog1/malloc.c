@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define ALLOCBLOCKSIZE 256
+#define ALLOCBLOCKSIZE 65536
 #define PADSIZE 16
 #define DEBUG 0
 
@@ -273,6 +273,10 @@ AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
         /*printf("getFreeAU\n");*/
 
     if (cur->size >= sizeWanted && cur->isFree) {
+        return cur;
+    } else if (cur->next != NULL) {
+        return getFreeAU(cur->next, sizeWanted);
+    } else if (sizeWanted <= ALLOCBLOCKSIZE - sizeof(AllocUnit)) { 
         /* if cur->next is NULL we know cur is the top of the heap */
         newAU = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), ALLOCBLOCKSIZE);
         cur->next = newAU;
