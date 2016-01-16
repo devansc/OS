@@ -5,7 +5,6 @@
 
 #define ALLOCBLOCKSIZE 65536
 #define PADSIZE 16
-#define DEBUG 0
 
 extern int printf(const char *format, ...);
 extern void exit(int);
@@ -15,8 +14,6 @@ AllocUnit *startHeap;
 
 void init() {
     if (startHeap == NULL) {
-        if (DEBUG)
-            printf("initialized startHeap\n");
         startHeap = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), 
                 ALLOCBLOCKSIZE);
     }
@@ -43,8 +40,6 @@ void * calloc(size_t nmemb, size_t size) {
     AllocUnit *au;
     paddedSize  = padSize(nmemb * size);
     au = allocateNew(paddedSize);
-    if (DEBUG)
-        printf("calloc\n");
     memset(au->memLoc, 0, paddedSize);
     if (debugMalloc()) {
         printf("MALLOC: calloc(%zu,%zu)     =>   (ptr=%p, size=%d)\n",nmemb,
@@ -62,10 +57,6 @@ void * realloc(void *ptr, size_t size) {
         return NULL;
     }
     paddedSize = padSize(size);
-    if (DEBUG)
-        printf("realloc %p - %zu", ptr, size);
-    if (DEBUG)
-        printHeap(startHeap);
     init();
 
     au = findAU(startHeap, (uintptr_t) ptr);
@@ -75,10 +66,6 @@ void * realloc(void *ptr, size_t size) {
     }
 
     newAU = reallocate(au, paddedSize);
-    if (DEBUG)
-        printf("done reallocing\n");
-    if (DEBUG)
-        printHeap(startHeap);
     if (debugMalloc()) {
         printf("MALLOC: realloc(%p,%zu)    =>   (ptr=%p, size=%d)\n",ptr,
                 size,newAU->memLoc,newAU->size); 
@@ -89,8 +76,6 @@ void * realloc(void *ptr, size_t size) {
 void mergeAU(AllocUnit *au) {
     AllocUnit *next = au->next;
     size_t increaseSize;
-    if (DEBUG)
-        printf("mergeAU\n");
 
     if (next == NULL) return;  /* shouldn't happen */
     
@@ -104,8 +89,6 @@ void mergeAU(AllocUnit *au) {
 AllocUnit *reallocate(AllocUnit *au, size_t size) {
     AllocUnit *newAU;
     size_t origSize = size;
-    if (DEBUG)
-        printf("reallocate\n");
     if (au->size >= size) {
         au->size = size;
         au->isFree = 0;
@@ -121,12 +104,7 @@ AllocUnit *reallocate(AllocUnit *au, size_t size) {
         /* au->last->size = size; */
         newAU = au->last;
         unfreeAU(au->last, size);
-        if (DEBUG)
-            printf("copying from %p to %p (%zu)\n", au->memLoc,
-                 au->last->memLoc, origSize);
         memmove(au->last->memLoc, au->memLoc, origSize);
-        if (DEBUG)
-            printf("returning AU %p\n", au->last);
         return newAU;
     } else if (au->size >= size) {
         /*au->size = size;*/
@@ -134,24 +112,13 @@ AllocUnit *reallocate(AllocUnit *au, size_t size) {
         return au; 
     } else {
         newAU = allocateNew(size);
-        if (DEBUG)
-            printf("copying from %p to %p (%zu)\n", au, newAU->memLoc, 
-                    origSize);
-        if (DEBUG)
-            printf("copying memory... ");
-        if (DEBUG)
-            printf("copying memory... ");
         memmove(newAU->memLoc, au->memLoc, origSize);
-        if (DEBUG)
-            printf("copied\n");
         return newAU;
     }
 }
 
 AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
     uintptr_t loc = (uintptr_t) cur->memLoc;
-    /*if (DEBUG)*/
-        /*printf("findAU\n");*/
     if (ptr < loc + cur->size && ptr >= loc) {
         return cur;
     } else if (cur->next != NULL) {
@@ -163,16 +130,10 @@ AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
 }
 
 void * malloc(size_t size) {
-    if (DEBUG)
-        printf("malloc -- \n");
-    if (DEBUG)
-        printHeap(startHeap);
     AllocUnit *au = allocateNew(size);
     if (debugMalloc()) {
         printf("MALLOC: malloc(%zu)        =>   (ptr=%p, size=%d)\n", size,
                 au->memLoc,au->size); 
-        if (DEBUG)
-            printHeap(startHeap);
     }
     return au->memLoc;
 }
@@ -180,40 +141,25 @@ void * malloc(size_t size) {
 AllocUnit *allocateNew(size_t size) {
     AllocUnit *freeAU;
     size_t paddedSize = padSize(size);
-    if (DEBUG)
-        printf("allocateNew\n");
     init();
 
     freeAU = getFreeAU(startHeap, paddedSize);
 
     unfreeAU(freeAU, paddedSize);
 
-    if (DEBUG)
-        printf("alloc'd at %p\n", freeAU->memLoc);
     return freeAU;
 }
 
 void free(void *ptr) {
-    if (DEBUG)
-        printf("free -- ");
-    if (DEBUG)
-        printHeap(startHeap);
     if (ptr == NULL) return;
     freePointer(startHeap, (uintptr_t) ptr);
     if (debugMalloc()) {
         printf("MALLOC: free(%p)\n",ptr);
-        if (DEBUG)
-            printHeap(startHeap);
     }
 }
 
 void freePointer(AllocUnit *current, uintptr_t ptr) {
     uintptr_t loc = (uintptr_t) current->memLoc;
-    if (DEBUG)
-        printf("freePointer\n");
-    if (DEBUG)
-        printf("trying to free %p, current %p-%p\n", ptr, loc, 
-        loc+current->size);
     if (ptr < loc + current->size && ptr >= loc) {
         current->isFree = 1;
         /* check for neighboring free space and merge */
@@ -224,10 +170,6 @@ void freePointer(AllocUnit *current, uintptr_t ptr) {
     } else if (current->next != NULL) {
         freePointer(current->next, ptr);
     } else {
-        if (DEBUG)
-            printf("free unkown space %X\n", ptr);
-        if (DEBUG)
-            printHeap(startHeap);
         return; /*couldnt find pointer just return cleanly */
     }
 }
@@ -237,8 +179,6 @@ void unfreeAU(AllocUnit *au, size_t size) {
     uintptr_t location;
     AllocUnit *nextAU;
     int needsCopy = 0;
-    if (DEBUG)
-        printf("unfreeAU\n");
 
     location = (uintptr_t)au->memLoc + size;
     au->size = size;
@@ -252,8 +192,6 @@ void unfreeAU(AllocUnit *au, size_t size) {
         nextAU = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), ALLOCBLOCKSIZE);
     } else{
         nextAU = NULL;
-        if (DEBUG)
-            printf("not changing next\n");
     }
 
     if (nextAU != NULL) {
@@ -266,8 +204,6 @@ void unfreeAU(AllocUnit *au, size_t size) {
 
 AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
     AllocUnit *newAU;
-    /*if (DEBUG)*/
-        /*printf("getFreeAU\n");*/
 
     if (cur->size >= sizeWanted && cur->isFree) {
         return cur;
@@ -284,10 +220,6 @@ AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
         sizeWanted + sizeof(AllocUnit));
         cur->next = newAU;
         newAU->last = cur;
-        if (DEBUG)
-            printf("After bigMalloc -- ");
-        if (DEBUG)
-            printHeap(startHeap);
         return newAU;
     }
 }
@@ -295,19 +227,15 @@ AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
 uintptr_t moveHeapPointer(size_t numBytes) {
     uintptr_t location;
     uintptr_t oldLoc;
-    if (DEBUG)
-        printf("moveHeapPointer from ");
 
     oldLoc = sbrk(0);
-    if (oldLoc % 16) sbrk(16-(oldLoc % 16));
+    if (oldLoc % PADSIZE) sbrk(PADSIZE-(oldLoc % PADSIZE));
     
     location = sbrk(numBytes + sizeof(AllocUnit));
     if (location == -1) {
         perror("sbrk");
         exit(-1); /* TODO return null somehow ... */
     }
-    if (DEBUG)
-        printf("%p -> %p\n", oldLoc, location + numBytes + sizeof(AllocUnit));
     return location;
 }
 
@@ -317,8 +245,6 @@ uintptr_t moveHeapPointer(size_t numBytes) {
 AllocUnit *newAllocUnit(uintptr_t location, size_t size_block) {
     AllocUnit newAU;
     uintptr_t memLocation = location + sizeof(AllocUnit);
-    if (DEBUG)
-        printf("newAllocUnit %p\n", memLocation);
 
     newAU.size = size_block;
     newAU.memLoc = (void *)memLocation;
@@ -330,9 +256,7 @@ AllocUnit *newAllocUnit(uintptr_t location, size_t size_block) {
 }
 
 size_t padSize(size_t size) {
-    if (DEBUG)
-        printf("padSize\n");
-    if (size % 16 == 0) return size;
+    if (size % PADSIZE == 0) return size;
     size = size / PADSIZE;
     size = size + 1;
     return size * PADSIZE;
