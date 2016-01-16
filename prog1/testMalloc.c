@@ -1,15 +1,13 @@
 #include "malloc.h"
 
 int main(int argc, char **argv) {
-  unsigned char *val;
-
-  val = malloc (1024);
-  if ( val )
-    printf("Calling malloc succeeded.\n");
-  else {
-    printf("malloc() returned NULL.\n");
-    exit(1);
+  void *val;
+  int i = 0;
+  while(val) {
+    val=malloc(1000000);
+    i++;
   }
-
-    return 0;
+  printf("mallocd %d\n", i);
+  perror("hit error");
+  exit(0);
 }

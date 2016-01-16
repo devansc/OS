@@ -1,3 +1,11 @@
+/*
+ * Author: Devan Carlson (decarlso)
+ *
+ * Header file for malloc.c. Includes the function headers and struct
+ * Header file for malloc.c. Includes the fdefinitions for malloc.
+ * 
+ *
+ */
 #include <stddef.h>
 #include <stdint.h>
 
@@ -15,7 +23,7 @@ void *malloc(size_t size);
 AllocUnit *newAllocUnit(uintptr_t location, size_t size_block);
 AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted);
 uintptr_t moveHeapPointer(size_t numBytes);
-void unfreeAU(AllocUnit *au, size_t size);
+AllocUnit * unfreeAU(AllocUnit *au, size_t size);
 size_t padSize(size_t size);
 
 

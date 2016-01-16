@@ -1,13 +1,11 @@
-all: malloc libmalloc testMalloc
+all: malloc libmalloc intel-all
 
 malloc: malloc.h malloc.c
 	gcc -g -Wall -fPIC -ansi -c malloc.c
 
 libmalloc: malloc.o
 	gcc -shared -fPIC -o libmalloc.so malloc.o
-
-testMalloc: malloc.o testMalloc.c libmalloc.so
-	gcc testMalloc.c -L. -lmalloc -o testMalloc
+	ar r libmalloc.a malloc.o
 
 intel-all: malloc.o
 	mkdir lib
@@ -18,5 +16,5 @@ intel-all: malloc.o
 	gcc -Wall -g -fpic -shared -o lib64/libmalloc.so malloc64.o
 
 clean:
-	rm -f *.o libmalloc.so testMalloc 
+	rm -f *.o libmalloc.so
 	rm -rf lib lib64
