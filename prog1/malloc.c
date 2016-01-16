@@ -1,3 +1,10 @@
+/*
+ * Author: Devan Carlson (decarlso)
+ *
+ * This program is a memory allocater library. It implements the 4 stdlib 
+ * functions malloc, calloc, realloc and free. 
+ *
+ */
 #include "malloc.h"
 #include <stdint.h>
 #include <unistd.h>
@@ -10,8 +17,12 @@ extern int printf(const char *format, ...);
 extern void exit(int);
 extern char *getenv(const char *name);
 
-AllocUnit *startHeap;
+/* Globals */
+AllocUnit *startHeap; /* Start of the heap - first place to malloc */
 
+/*
+ * Initializes the startHeap if it's uninitialized - happens once per program.
+ */
 void init() {
     if (startHeap == NULL) {
         startHeap = newAllocUnit(moveHeapPointer(ALLOCBLOCKSIZE), 
@@ -19,6 +30,9 @@ void init() {
     }
 }
 
+/*
+ * Returns true if DEBUG_MALLOC env variable is set.
+ */
 int debugMalloc() {
     if (getenv("DEBUG_MALLOC") != NULL) {
         return 1;      
@@ -26,15 +40,9 @@ int debugMalloc() {
     return 0;
 }
 
-void printHeap(AllocUnit *cur) {
-    printf("HEAP:\n");
-    while (cur != NULL) {
-        printf("   %p-%p, %zu, %s\n", cur->memLoc, cur->memLoc+cur->size, 
-            cur->size, cur->isFree ? "free" : "used");
-        cur = cur->next;
-    }
-}
-
+/*
+ * Implementation of stdlib calloc.
+ */
 void * calloc(size_t nmemb, size_t size) {
     int paddedSize;
     AllocUnit *au;
@@ -48,6 +56,9 @@ void * calloc(size_t nmemb, size_t size) {
     return au->memLoc;
 }
 
+/*
+ * Implementation of stdlib realloc.
+ */
 void * realloc(void *ptr, size_t size) {
     AllocUnit *au, *newAU;
     size_t paddedSize;
@@ -73,6 +84,10 @@ void * realloc(void *ptr, size_t size) {
     return newAU->memLoc;
 }
 
+/* 
+ * Merges one AllocUnit with it's next AllocUnit. Must check if au->next
+ * is free before calling.
+ */
 void mergeAU(AllocUnit *au) {
     AllocUnit *next = au->next;
     size_t increaseSize;
@@ -86,28 +101,35 @@ void mergeAU(AllocUnit *au) {
     if (au->next != NULL) au->next->last = au;
 }
 
+/*
+ * Attempts to reallocate an AllocUnit au. Attempts in place expansion, and 
+ * if not, merges with neighboring free AllocUnits if possible. Then if that
+ * isn't enough size, allocates a new AllocUnit with the correct size.
+ */
 AllocUnit *reallocate(AllocUnit *au, size_t size) {
     AllocUnit *newAU;
     size_t origSize = size;
     if (au->size >= size) {
         au->size = size;
         au->isFree = 0;
-        return au; /*all we have to do here?*/
+        return au;
     }
+
+    /* Merges with next AU if free */
     if (au->next != NULL && au->next->isFree) {
         mergeAU(au);
     }
+    /* Merges with last AU if free */
     if (au->last != NULL && au->last->isFree) {
         mergeAU(au->last);
     }
+
     if (au->last != NULL && au->last->isFree && au->last->size >= size) {
-        /* au->last->size = size; */
         newAU = au->last;
         unfreeAU(au->last, size);
         memmove(au->last->memLoc, au->memLoc, origSize);
         return newAU;
     } else if (au->size >= size) {
-        /*au->size = size;*/
         unfreeAU(au, size);
         return au; 
     } else {
@@ -117,6 +139,9 @@ AllocUnit *reallocate(AllocUnit *au, size_t size) {
     }
 }
 
+/* 
+ * Finds an AllocUnit that contains location ptr in the Heap.
+ */
 AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
     uintptr_t loc = (uintptr_t) cur->memLoc;
     if (ptr < loc + cur->size && ptr >= loc) {
@@ -129,6 +154,9 @@ AllocUnit * findAU(AllocUnit *cur, uintptr_t ptr) {
 
 }
 
+/*
+ * Implementation of stdlib malloc.
+ */
 void * malloc(size_t size) {
     AllocUnit *au = allocateNew(size);
     if (debugMalloc()) {
@@ -138,6 +166,10 @@ void * malloc(size_t size) {
     return au->memLoc;
 }
 
+/*
+ * Finds a free AllocUnit of the correct size, and returns it. Also creates 
+ * the next free AllocUnit if the next AU is NULL with the available space.
+ */
 AllocUnit *allocateNew(size_t size) {
     AllocUnit *freeAU;
     size_t paddedSize = padSize(size);
@@ -150,6 +182,9 @@ AllocUnit *allocateNew(size_t size) {
     return freeAU;
 }
 
+/*
+ * Implementation of stdlib free.
+ */
 void free(void *ptr) {
     if (ptr == NULL) return;
     freePointer(startHeap, (uintptr_t) ptr);
@@ -158,6 +193,10 @@ void free(void *ptr) {
     }
 }
 
+/*
+ * Finds the AU pointed to by ptr, and frees it. Attempts to expand with 
+ * neighboring free AU's. 
+ */
 void freePointer(AllocUnit *current, uintptr_t ptr) {
     uintptr_t loc = (uintptr_t) current->memLoc;
     if (ptr < loc + current->size && ptr >= loc) {
@@ -174,6 +213,10 @@ void freePointer(AllocUnit *current, uintptr_t ptr) {
     }
 }
 
+/*
+ * Unfree's an AU and sets it size to 'size'. If au doesn't have a next, then
+ * it creates a new AU with the available free space. 
+ */
 void unfreeAU(AllocUnit *au, size_t size) {
     long freeSpace = au->size - size - sizeof(AllocUnit);
     uintptr_t location;
@@ -195,13 +238,15 @@ void unfreeAU(AllocUnit *au, size_t size) {
     }
 
     if (nextAU != NULL) {
-        /* nextAU->next = au->next; WTF was i thinking right here */
-
         nextAU->last = au;
         au->next = nextAU;
     }
 }
 
+/*
+ * Finds a free AU from the heap. If there are none available, creates more 
+ * heap space and returns a new AU. 
+ */
 AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
     AllocUnit *newAU;
 
@@ -216,7 +261,7 @@ AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
         newAU->last = cur;
         return newAU;
     } else {
-        newAU = newAllocUnit(moveHeapPointer(sizeWanted + sizeof(AllocUnit)), 
+        newAU = newAllocUnit(moveHeapPointer(sizeWanted), 
         sizeWanted + sizeof(AllocUnit));
         cur->next = newAU;
         newAU->last = cur;
@@ -224,6 +269,9 @@ AllocUnit *getFreeAU(AllocUnit *cur, size_t sizeWanted) {
     }
 }
 
+/*
+ * Moves the heap pointer using sbrk in increments of PADSIZE.
+ */
 uintptr_t moveHeapPointer(size_t numBytes) {
     uintptr_t location;
     uintptr_t oldLoc;
@@ -255,6 +303,9 @@ AllocUnit *newAllocUnit(uintptr_t location, size_t size_block) {
     return (AllocUnit *) location;
 }
 
+/*
+ * Pads (aligns) a size to PADSIZE bytes.
+ */
 size_t padSize(size_t size) {
     if (size % PADSIZE == 0) return size;
     size = size / PADSIZE;
