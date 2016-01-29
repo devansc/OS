@@ -1,0 +1,6 @@
+Five threads, variable iters, exit from back
+
+This is the numbersmain program distributed with the assignment.
+Each thread (1..5) exits after N minus its number of iterations.
+The effect is to always have the last process call lwp_exit().
+

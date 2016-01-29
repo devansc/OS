@@ -1,0 +1,37 @@
+./testlib/19_semaphores/
+
+0x00007ffff7dea812 in done ()
+
+stack one   $6 = (long unsigned int *) 0x7ffff5798010
+stack two   $7 = (long unsigned int *) 0x7ffff3170010
+stack three $8 = (long unsigned int *) 0x7ffff0b48010
+                                   0x00007ffff7dea812 in done ()
+stack four  $9 = (long unsigned int *) 0x7fffee520010
+0x00007ffff7dea812
+
+ 1) 0x7fffc82a0010 0x7fffc82a2000
+ 2) 0x7fffca8c8010 0x7fffca8ca000
+ 3) 0x7fffccef0010 0x7fffccef2000
+ 4) 0x7fffcf518010 0x7fffcf51a000
+ 5) 0x7fffd1b40010 0x7fffd1b42000
+ 6) 0x7fffd4168010 0x7fffd416a000
+ 7) 0x7fffd6790010 0x7fffd6792000
+ 8) 0x7fffd8db8010 0x7fffd8dba000
+ 9) 0x7fffdb3e0010 0x7fffdb3e2000
+10) 0x7fffdda08010 0x7fffdda0a000
+11) 0x7fffe0030010 0x7fffe0032000
+12) 0x7fffe2658010 0x7fffe265a000
+13) 0x7fffe4c80010 0x7fffe4c82000
+14) 0x7fffe72a8010 0x7fffe72aa000
+
+15) 0x7fffe98d0010 0x7fffe98d2000
+16) 0x7fffebef8010 0x7fffebefa000
+17) 0x7fffee520010 0x7fffee522000
+18) 0x7ffff0b48010 0x7ffff0b4a000
+19) 0x7ffff3170010 0x7ffff3172000
+20) 0x7ffff5798010 0x7ffff579a000
+
+rsp                0x7fffe98cf950	0x7fffe98cf950
+
+lrwxrwxrwx. 1 pnico pnico 34 Nov  4 06:53 lwp.h -> ../../../../asgn2/Soln/Given/lwp.h
+

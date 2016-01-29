@@ -1,0 +1,5 @@
+Three lwps.  Stop, then restart
+
+This test spawns a three threads each of which stops and restarts
+several times.
+

@@ -1,0 +1,5 @@
+Five threads, variable iters, exit from front
+
+This is the numbersmain program distributed with the assignment.
+Each thread (1..5) exits after its number of iterations
+

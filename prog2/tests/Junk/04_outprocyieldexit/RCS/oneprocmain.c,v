@@ -1,0 +1,81 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2013.04.11.12.56.27;	author pnico;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.04.07.19.19.52;	author pnico;	state Exp;
+branches;
+next	;
+
+
+desc
+@Changed new_lwp() to lwp_create()
+@
+
+
+1.2
+log
+@Made compatible with the 64-bit update
+@
+text
+@/*
+ */
+
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include "lwp.h"
+
+#define INITIALSTACK 4096
+
+static void indentnum(uintptr_t num) {
+  /* print the number num num times, indented by 5*num spaces
+   * Not terribly interesting, but it is instructive.
+   */
+  printf("Greetings from Thread %d.  Yielding...\n",(int)num);
+  lwp_yield();
+  printf("I'm still alive.  Goodbye.\n");
+  lwp_exit(0);
+}
+
+
+int main(int argc, char *argv[]){
+  long i;
+
+  /* spawn a number of individual LWPs */
+  for(i=0;i<1;i++)
+    lwp_create((lwpfun)indentnum,(void*)i,INITIALSTACK);
+
+  lwp_start();
+
+  printf("LWPs have ended.\n");
+  return 0;
+}
+
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+d13 1
+a13 1
+static void indentnum(void *num) {
+d25 1
+a25 1
+  int i;
+@

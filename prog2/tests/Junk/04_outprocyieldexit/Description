@@ -1,0 +1,4 @@
+One lwp, calling lwp_yield(), then lwp_exit()
+
+This test spawns a single thread that prints a message, yields
+to itself then calls lwp_exit() to return to main.

@@ -1,0 +1,4 @@
+Five lwps, calling lwp_yield(), then lwp_exit()
+
+This test spawns five LWPs, each of which yields once,
+then calls lwp_exit() the second time.

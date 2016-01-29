@@ -1,0 +1,7 @@
+Dine with semaphores
+
+Dining philosophers synchronized by a scheduler that supports
+semaphores.
+
+
+

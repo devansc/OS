@@ -1,0 +1,7 @@
+Sched->next() returns NULL to lwp_yield()
+
+Has a scheduler that returns a thread once, then NULL thereafter.
+
+
+
+

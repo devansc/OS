@@ -1,0 +1,7 @@
+Ping pong with semaphores
+
+20 threads each of which either Pings or Pongs twice synchronized
+by a scheduler that supports semaphores.
+
+
+

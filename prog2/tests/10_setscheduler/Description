@@ -1,0 +1,6 @@
+Five threads, AlwaysZero scheduling
+
+This is the numbersmain program distributed with the assignment,
+but with the scheduler changed to always run the head of the queue.
+Each thread (1..5) exits after its number of iterations.
+

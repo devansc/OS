@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+foreach $file ( @ARGV ) {
+    open (IN,"<$file") or die "Unable to open $file.\n";
+
+    @sarray = lstat($file);;
+    $mode = $sarray[2] & 07777;
+    unlink("$file.new");        # get rid of it if it exists
+    open (OUT, ">$file.new") or die "Unable to open $file.new.\n";
+    chmod ($mode,"$file.new");
+    
+    while ( <IN> ) {
+        s/do_lwp/lwp_start/ig;
+        s/lwp_end/lwp_stop/ig;
+        print OUT;
+    }
+    close(IN);
+    close(OUT);
+
+    rename("$file","$file.bak");
+    rename("$file.new","$file");
+
+    print "$file\n";
+}

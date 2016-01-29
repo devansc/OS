@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2013.05.06.21.35.25;	author pnico;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#ifndef SEMSH
+#define SEMSH
+
+#include <lwp.h>
+
+extern scheduler Semaphores;
+extern struct scheduler s_publish; /* for static initialization */
+
+
+typedef struct semaphore *Semaphore;
+
+Semaphore newsem(char *name, int num);
+void up(Semaphore s);
+void down(Semaphore s);
+int rql();                      /* returns the runQueue length */
+
+#endif
+@

@@ -1,0 +1,5 @@
+Lwp spawns another then exits 100 times.
+
+One thread creates a new one, then exits.
+
+

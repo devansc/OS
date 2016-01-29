@@ -1,0 +1,5 @@
+Tid2thread() returns NULL given a bad tid?
+
+This launches a single thread, then calls tid2thread with 
+a threadID that isn't it.  Tid2thread should return NULL.
+

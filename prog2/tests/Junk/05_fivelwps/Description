@@ -1,0 +1,4 @@
+Five lwps, calling lwp_yield(), then exit()
+
+This test spawns five threads that each print a message and yield.
+The second time through the last one calls exit();

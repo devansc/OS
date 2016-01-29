@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <lwp.h>
+
+#define STACKSIZE 8096
+
+static void counter(int num)
+{
+  if ( num ) {
+    new_lwp((lwpfun)counter,(void*)num-1,STACKSIZE);
+    printf("%d\n",num);
+  } else {
+    printf("Bye\n");
+  }
+  lwp_exit();
+}
+
+
+int main() {
+  new_lwp((lwpfun)counter,(void*)100,STACKSIZE);
+  lwp_start();
+  exit(0);
+}

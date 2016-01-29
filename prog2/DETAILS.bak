@@ -1,0 +1,2835 @@
+=================================================
+TEST 2: start() with no threads
+
+This test calls lwp_start() without having created any threads
+
+
+----------
+Reference:
+----------
+About to call lwp_start() with no threads...ok.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/02_NoThreadStart/02_NoThreadStart: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1c1
+< About to call lwp_start() with no threads...ok.
+---
+> /home/pn-cs453/lib/asgn2//testlib/02_NoThreadStart/02_NoThreadStart: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 3: One lwp, calling exit()
+
+This test spawns a single thread that prints a message then calls
+exit.
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Goodbye
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/03_oneproc/03_oneproc: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1c1
+< Greetings from Thread 0.  Goodbye
+---
+> /home/pn-cs453/lib/asgn2//testlib/03_oneproc/03_oneproc: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 4: One lwp, calling lwp_yield(), then exit()
+
+This test spawns a single thread that prints a message, yields
+to itself then calls exit().
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+I'm still alive.  Goodbye
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/04_oneprocyield/04_oneprocyield: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,2c1
+< Greetings from Thread 0.  Yielding...
+< I'm still alive.  Goodbye
+---
+> /home/pn-cs453/lib/asgn2//testlib/04_oneprocyield/04_oneprocyield: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 5: One lwp, calling lwp_yield(), then lwp_exit()
+
+This test spawns a single thread that prints a message, yields
+to itself then calls lwp_exit() to return to main.
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+I'm still alive.  Goodbye.
+LWPs have ended.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/05_outprocyieldexit/05_outprocyieldexit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,3c1
+< Greetings from Thread 0.  Yielding...
+< I'm still alive.  Goodbye.
+< LWPs have ended.
+---
+> /home/pn-cs453/lib/asgn2//testlib/05_outprocyieldexit/05_outprocyieldexit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 6: Five lwps, calling lwp_yield(), then exit()
+
+This test spawns five threads that each print a message and yield.
+The second time through the last one calls exit();
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+Greetings from Thread 1.  Yielding...
+Greetings from Thread 2.  Yielding...
+Greetings from Thread 3.  Yielding...
+Greetings from Thread 4.  Yielding...
+I (0) am still alive.  Goodbye.
+I (1) am still alive.  Goodbye.
+I (2) am still alive.  Goodbye.
+I (3) am still alive.  Goodbye.
+I (4) am still alive.  Goodbye.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/06_fivelwps/06_fivelwps: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,10c1
+< Greetings from Thread 0.  Yielding...
+< Greetings from Thread 1.  Yielding...
+< Greetings from Thread 2.  Yielding...
+< Greetings from Thread 3.  Yielding...
+< Greetings from Thread 4.  Yielding...
+< I (0) am still alive.  Goodbye.
+< I (1) am still alive.  Goodbye.
+< I (2) am still alive.  Goodbye.
+< I (3) am still alive.  Goodbye.
+< I (4) am still alive.  Goodbye.
+---
+> /home/pn-cs453/lib/asgn2//testlib/06_fivelwps/06_fivelwps: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 7: Five lwps, calling lwp_yield(), then lwp_exit()
+
+This test spawns five LWPs, each of which yields once,
+then calls lwp_exit() the second time.
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+Greetings from Thread 1.  Yielding...
+Greetings from Thread 2.  Yielding...
+Greetings from Thread 3.  Yielding...
+Greetings from Thread 4.  Yielding...
+I (0) am still alive.  Goodbye.
+I (1) am still alive.  Goodbye.
+I (2) am still alive.  Goodbye.
+I (3) am still alive.  Goodbye.
+I (4) am still alive.  Goodbye.
+LWPs have ended.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/07_fivelwpsexit/07_fivelwpsexit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,11c1
+< Greetings from Thread 0.  Yielding...
+< Greetings from Thread 1.  Yielding...
+< Greetings from Thread 2.  Yielding...
+< Greetings from Thread 3.  Yielding...
+< Greetings from Thread 4.  Yielding...
+< I (0) am still alive.  Goodbye.
+< I (1) am still alive.  Goodbye.
+< I (2) am still alive.  Goodbye.
+< I (3) am still alive.  Goodbye.
+< I (4) am still alive.  Goodbye.
+< LWPs have ended.
+---
+> /home/pn-cs453/lib/asgn2//testlib/07_fivelwpsexit/07_fivelwpsexit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 8: Five threads, variable iters, exit from front
+
+This is the numbersmain program distributed with the assignment.
+Each thread (1..5) exits after its number of iterations
+
+
+----------
+Reference:
+----------
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+         2
+              3
+                   4
+                        5
+              3
+                   4
+                        5
+                   4
+                        5
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/08_numbers/08_numbers: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,17c1
+< Launching LWPS
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<          2
+<               3
+<                    4
+<                         5
+<               3
+<                    4
+<                         5
+<                    4
+<                         5
+<                         5
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/08_numbers/08_numbers: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 9: Five threads, variable iters, exit from back
+
+This is the numbersmain program distributed with the assignment.
+Each thread (1..5) exits after N minus its number of iterations.
+The effect is to always have the last process call lwp_exit().
+
+
+----------
+Reference:
+----------
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+    1
+         2
+              3
+    1
+         2
+    1
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/09_numbersBackwards/09_numbersBackwards: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,17c1
+< Launching LWPS
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<     1
+<          2
+<               3
+<     1
+<          2
+<     1
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/09_numbersBackwards/09_numbersBackwards: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 10: Five threads, AlwaysZero scheduling
+
+This is the numbersmain program distributed with the assignment,
+but with the scheduler changed to always run the head of the queue.
+Each thread (1..5) exits after its number of iterations.
+
+
+----------
+Reference:
+----------
+Launching LWPS
+    1
+         2
+         2
+              3
+              3
+              3
+                   4
+                   4
+                   4
+                   4
+                        5
+                        5
+                        5
+                        5
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/10_setscheduler/10_setscheduler: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,17c1
+< Launching LWPS
+<     1
+<          2
+<          2
+<               3
+<               3
+<               3
+<                    4
+<                    4
+<                    4
+<                    4
+<                         5
+<                         5
+<                         5
+<                         5
+<                         5
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/10_setscheduler/10_setscheduler: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 11: One lwp, yields, and returns
+
+This test spawns a single thread that prints a message, yields
+to itself, then returns
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+I'm still alive.  Goodbye
+After thread termination
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/11_oneprocReturns/11_oneprocReturns: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,3c1
+< Greetings from Thread 0.  Yielding...
+< I'm still alive.  Goodbye
+< After thread termination
+---
+> /home/pn-cs453/lib/asgn2//testlib/11_oneprocReturns/11_oneprocReturns: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 12: Ten lwps, yields, and returns
+
+This test spawns several threads that prints a message, yields
+to itself, then returns
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+Greetings from Thread 1.  Yielding...
+Greetings from Thread 2.  Yielding...
+Greetings from Thread 3.  Yielding...
+Greetings from Thread 4.  Yielding...
+Greetings from Thread 5.  Yielding...
+Greetings from Thread 6.  Yielding...
+Greetings from Thread 7.  Yielding...
+Greetings from Thread 8.  Yielding...
+Greetings from Thread 9.  Yielding...
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+I'm still alive.  Goodbye
+After thread termination
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/12_tenprocsreturn/12_tenprocsreturn: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,21c1
+< Greetings from Thread 0.  Yielding...
+< Greetings from Thread 1.  Yielding...
+< Greetings from Thread 2.  Yielding...
+< Greetings from Thread 3.  Yielding...
+< Greetings from Thread 4.  Yielding...
+< Greetings from Thread 5.  Yielding...
+< Greetings from Thread 6.  Yielding...
+< Greetings from Thread 7.  Yielding...
+< Greetings from Thread 8.  Yielding...
+< Greetings from Thread 9.  Yielding...
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< I'm still alive.  Goodbye
+< After thread termination
+---
+> /home/pn-cs453/lib/asgn2//testlib/12_tenprocsreturn/12_tenprocsreturn: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 13: Three lwps.  Stop, then restart
+
+This test spawns a three threads each of which stops and restarts
+several times.
+
+
+----------
+Reference:
+----------
+Starting LWPs...
+Test
+Test
+Test
+Test2
+Test2
+Test2
+Test3
+Test3
+Test3
+Test4
+Test4
+Test4
+Test5
+Test5
+Test5
+Test6
+Test6
+Test6
+Done.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/13_StopRestart/13_StopRestart: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,20c1
+< Starting LWPs...
+< Test
+< Test
+< Test
+< Test2
+< Test2
+< Test2
+< Test3
+< Test3
+< Test3
+< Test4
+< Test4
+< Test4
+< Test5
+< Test5
+< Test5
+< Test6
+< Test6
+< Test6
+< Done.
+---
+> /home/pn-cs453/lib/asgn2//testlib/13_StopRestart/13_StopRestart: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 14: Five lwps, all exit, recreate then call start
+
+Creates five lwps each of which eventually exits.  After exiting,
+main() recreates them and calls start again()
+
+----------
+Reference:
+----------
+Greetings from Thread 0.  Yielding...
+Greetings from Thread 1.  Yielding...
+Greetings from Thread 2.  Yielding...
+Greetings from Thread 3.  Yielding...
+Greetings from Thread 4.  Yielding...
+I (0) am still alive.  Goodbye.
+I (1) am still alive.  Goodbye.
+I (2) am still alive.  Goodbye.
+I (3) am still alive.  Goodbye.
+I (4) am still alive.  Goodbye.
+First round complete. Restarting with no queue
+Creating five LWPs and starting them
+Greetings from Thread 0.  Yielding...
+Greetings from Thread 1.  Yielding...
+Greetings from Thread 2.  Yielding...
+Greetings from Thread 3.  Yielding...
+Greetings from Thread 4.  Yielding...
+I (0) am still alive.  Goodbye.
+I (1) am still alive.  Goodbye.
+I (2) am still alive.  Goodbye.
+I (3) am still alive.  Goodbye.
+I (4) am still alive.  Goodbye.
+LWPs have ended.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/14_RestartAfterNoProcs/14_RestartAfterNoProcs: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,23c1
+< Greetings from Thread 0.  Yielding...
+< Greetings from Thread 1.  Yielding...
+< Greetings from Thread 2.  Yielding...
+< Greetings from Thread 3.  Yielding...
+< Greetings from Thread 4.  Yielding...
+< I (0) am still alive.  Goodbye.
+< I (1) am still alive.  Goodbye.
+< I (2) am still alive.  Goodbye.
+< I (3) am still alive.  Goodbye.
+< I (4) am still alive.  Goodbye.
+< First round complete. Restarting with no queue
+< Creating five LWPs and starting them
+< Greetings from Thread 0.  Yielding...
+< Greetings from Thread 1.  Yielding...
+< Greetings from Thread 2.  Yielding...
+< Greetings from Thread 3.  Yielding...
+< Greetings from Thread 4.  Yielding...
+< I (0) am still alive.  Goodbye.
+< I (1) am still alive.  Goodbye.
+< I (2) am still alive.  Goodbye.
+< I (3) am still alive.  Goodbye.
+< I (4) am still alive.  Goodbye.
+< LWPs have ended.
+---
+> /home/pn-cs453/lib/asgn2//testlib/14_RestartAfterNoProcs/14_RestartAfterNoProcs: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 15: Lwp spawns another then exits 100 times.
+
+One thread creates a new one, then exits.
+
+
+
+----------
+Reference:
+----------
+100
+99
+98
+97
+96
+95
+94
+93
+92
+91
+90
+89
+88
+87
+86
+85
+84
+83
+82
+81
+80
+79
+78
+77
+76
+75
+74
+73
+72
+71
+70
+69
+68
+67
+66
+65
+64
+63
+62
+61
+60
+59
+58
+57
+56
+55
+54
+53
+52
+51
+50
+49
+48
+47
+46
+45
+44
+43
+42
+41
+40
+39
+38
+37
+36
+35
+34
+33
+32
+31
+30
+29
+28
+27
+26
+25
+24
+23
+22
+21
+20
+19
+18
+17
+16
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+Bye
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/15_100_procs_oneatatime/15_100_procs_oneatatime: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,101c1
+< 100
+< 99
+< 98
+< 97
+< 96
+< 95
+< 94
+< 93
+< 92
+< 91
+< 90
+< 89
+< 88
+< 87
+< 86
+< 85
+< 84
+< 83
+< 82
+< 81
+< 80
+< 79
+< 78
+< 77
+< 76
+< 75
+< 74
+< 73
+< 72
+< 71
+< 70
+< 69
+< 68
+< 67
+< 66
+< 65
+< 64
+< 63
+< 62
+< 61
+< 60
+< 59
+< 58
+< 57
+< 56
+< 55
+< 54
+< 53
+< 52
+< 51
+< 50
+< 49
+< 48
+< 47
+< 46
+< 45
+< 44
+< 43
+< 42
+< 41
+< 40
+< 39
+< 38
+< 37
+< 36
+< 35
+< 34
+< 33
+< 32
+< 31
+< 30
+< 29
+< 28
+< 27
+< 26
+< 25
+< 24
+< 23
+< 22
+< 21
+< 20
+< 19
+< 18
+< 17
+< 16
+< 15
+< 14
+< 13
+< 12
+< 11
+< 10
+< 9
+< 8
+< 7
+< 6
+< 5
+< 4
+< 3
+< 2
+< 1
+< Bye
+---
+> /home/pn-cs453/lib/asgn2//testlib/15_100_procs_oneatatime/15_100_procs_oneatatime: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 16: Two Lwps. spawn then exits 50 times.
+
+Two threads creates new ones, then exits.
+
+
+
+----------
+Reference:
+----------
+Counter is 50.  Exiting
+Counter is 50.  Exiting
+Counter is 49.  Exiting
+Counter is 49.  Exiting
+Counter is 48.  Exiting
+Counter is 48.  Exiting
+Counter is 47.  Exiting
+Counter is 47.  Exiting
+Counter is 46.  Exiting
+Counter is 46.  Exiting
+Counter is 45.  Exiting
+Counter is 45.  Exiting
+Counter is 44.  Exiting
+Counter is 44.  Exiting
+Counter is 43.  Exiting
+Counter is 43.  Exiting
+Counter is 42.  Exiting
+Counter is 42.  Exiting
+Counter is 41.  Exiting
+Counter is 41.  Exiting
+Counter is 40.  Exiting
+Counter is 40.  Exiting
+Counter is 39.  Exiting
+Counter is 39.  Exiting
+Counter is 38.  Exiting
+Counter is 38.  Exiting
+Counter is 37.  Exiting
+Counter is 37.  Exiting
+Counter is 36.  Exiting
+Counter is 36.  Exiting
+Counter is 35.  Exiting
+Counter is 35.  Exiting
+Counter is 34.  Exiting
+Counter is 34.  Exiting
+Counter is 33.  Exiting
+Counter is 33.  Exiting
+Counter is 32.  Exiting
+Counter is 32.  Exiting
+Counter is 31.  Exiting
+Counter is 31.  Exiting
+Counter is 30.  Exiting
+Counter is 30.  Exiting
+Counter is 29.  Exiting
+Counter is 29.  Exiting
+Counter is 28.  Exiting
+Counter is 28.  Exiting
+Counter is 27.  Exiting
+Counter is 27.  Exiting
+Counter is 26.  Exiting
+Counter is 26.  Exiting
+Counter is 25.  Exiting
+Counter is 25.  Exiting
+Counter is 24.  Exiting
+Counter is 24.  Exiting
+Counter is 23.  Exiting
+Counter is 23.  Exiting
+Counter is 22.  Exiting
+Counter is 22.  Exiting
+Counter is 21.  Exiting
+Counter is 21.  Exiting
+Counter is 20.  Exiting
+Counter is 20.  Exiting
+Counter is 19.  Exiting
+Counter is 19.  Exiting
+Counter is 18.  Exiting
+Counter is 18.  Exiting
+Counter is 17.  Exiting
+Counter is 17.  Exiting
+Counter is 16.  Exiting
+Counter is 16.  Exiting
+Counter is 15.  Exiting
+Counter is 15.  Exiting
+Counter is 14.  Exiting
+Counter is 14.  Exiting
+Counter is 13.  Exiting
+Counter is 13.  Exiting
+Counter is 12.  Exiting
+Counter is 12.  Exiting
+Counter is 11.  Exiting
+Counter is 11.  Exiting
+Counter is 10.  Exiting
+Counter is 10.  Exiting
+Counter is 9.  Exiting
+Counter is 9.  Exiting
+Counter is 8.  Exiting
+Counter is 8.  Exiting
+Counter is 7.  Exiting
+Counter is 7.  Exiting
+Counter is 6.  Exiting
+Counter is 6.  Exiting
+Counter is 5.  Exiting
+Counter is 5.  Exiting
+Counter is 4.  Exiting
+Counter is 4.  Exiting
+Counter is 3.  Exiting
+Counter is 3.  Exiting
+Counter is 2.  Exiting
+Counter is 2.  Exiting
+Counter is 1.  Exiting
+Counter is 1.  Exiting
+Bye
+Bye
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/16_100_procs_twoatatime/16_100_procs_twoatatime: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,102c1
+< Counter is 50.  Exiting
+< Counter is 50.  Exiting
+< Counter is 49.  Exiting
+< Counter is 49.  Exiting
+< Counter is 48.  Exiting
+< Counter is 48.  Exiting
+< Counter is 47.  Exiting
+< Counter is 47.  Exiting
+< Counter is 46.  Exiting
+< Counter is 46.  Exiting
+< Counter is 45.  Exiting
+< Counter is 45.  Exiting
+< Counter is 44.  Exiting
+< Counter is 44.  Exiting
+< Counter is 43.  Exiting
+< Counter is 43.  Exiting
+< Counter is 42.  Exiting
+< Counter is 42.  Exiting
+< Counter is 41.  Exiting
+< Counter is 41.  Exiting
+< Counter is 40.  Exiting
+< Counter is 40.  Exiting
+< Counter is 39.  Exiting
+< Counter is 39.  Exiting
+< Counter is 38.  Exiting
+< Counter is 38.  Exiting
+< Counter is 37.  Exiting
+< Counter is 37.  Exiting
+< Counter is 36.  Exiting
+< Counter is 36.  Exiting
+< Counter is 35.  Exiting
+< Counter is 35.  Exiting
+< Counter is 34.  Exiting
+< Counter is 34.  Exiting
+< Counter is 33.  Exiting
+< Counter is 33.  Exiting
+< Counter is 32.  Exiting
+< Counter is 32.  Exiting
+< Counter is 31.  Exiting
+< Counter is 31.  Exiting
+< Counter is 30.  Exiting
+< Counter is 30.  Exiting
+< Counter is 29.  Exiting
+< Counter is 29.  Exiting
+< Counter is 28.  Exiting
+< Counter is 28.  Exiting
+< Counter is 27.  Exiting
+< Counter is 27.  Exiting
+< Counter is 26.  Exiting
+< Counter is 26.  Exiting
+< Counter is 25.  Exiting
+< Counter is 25.  Exiting
+< Counter is 24.  Exiting
+< Counter is 24.  Exiting
+< Counter is 23.  Exiting
+< Counter is 23.  Exiting
+< Counter is 22.  Exiting
+< Counter is 22.  Exiting
+< Counter is 21.  Exiting
+< Counter is 21.  Exiting
+< Counter is 20.  Exiting
+< Counter is 20.  Exiting
+< Counter is 19.  Exiting
+< Counter is 19.  Exiting
+< Counter is 18.  Exiting
+< Counter is 18.  Exiting
+< Counter is 17.  Exiting
+< Counter is 17.  Exiting
+< Counter is 16.  Exiting
+< Counter is 16.  Exiting
+< Counter is 15.  Exiting
+< Counter is 15.  Exiting
+< Counter is 14.  Exiting
+< Counter is 14.  Exiting
+< Counter is 13.  Exiting
+< Counter is 13.  Exiting
+< Counter is 12.  Exiting
+< Counter is 12.  Exiting
+< Counter is 11.  Exiting
+< Counter is 11.  Exiting
+< Counter is 10.  Exiting
+< Counter is 10.  Exiting
+< Counter is 9.  Exiting
+< Counter is 9.  Exiting
+< Counter is 8.  Exiting
+< Counter is 8.  Exiting
+< Counter is 7.  Exiting
+< Counter is 7.  Exiting
+< Counter is 6.  Exiting
+< Counter is 6.  Exiting
+< Counter is 5.  Exiting
+< Counter is 5.  Exiting
+< Counter is 4.  Exiting
+< Counter is 4.  Exiting
+< Counter is 3.  Exiting
+< Counter is 3.  Exiting
+< Counter is 2.  Exiting
+< Counter is 2.  Exiting
+< Counter is 1.  Exiting
+< Counter is 1.  Exiting
+< Bye
+< Bye
+---
+> /home/pn-cs453/lib/asgn2//testlib/16_100_procs_twoatatime/16_100_procs_twoatatime: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 17: 100 threads with a minimal stack.  Just return.
+
+Create 100 threads, each with a 4-word stack.  All they do is return.
+
+
+
+----------
+Reference:
+----------
+Spawining 100 minumal threads.
+Done.  Count is 100.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/17_100_procs_min_stack/17_100_procs_min_stack: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,2c1
+< Spawining 100 minumal threads.
+< Done.  Count is 100.
+---
+> /home/pn-cs453/lib/asgn2//testlib/17_100_procs_min_stack/17_100_procs_min_stack: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 18: 1024 threads, random exit.
+
+Creat 1024 threads, each of which either yields or exits randomly until
+a counter reaches a given value.
+
+
+
+
+----------
+Reference:
+----------
+Spawining 4096 threads.
+Done.  Count is 50000. (Yielded 406869 times)
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/18_many_threads_random_exit/18_many_threads_random_exit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,2c1
+< Spawining 4096 threads.
+< Done.  Count is 50000. (Yielded 406869 times)
+---
+> /home/pn-cs453/lib/asgn2//testlib/18_many_threads_random_exit/18_many_threads_random_exit: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 19: Ping pong with semaphores
+
+20 threads each of which either Pings or Pongs twice synchronized
+by a scheduler that supports semaphores.
+
+
+
+
+----------
+Reference:
+----------
+Spawining threads. (20)
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+Done.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/19_semaphores/19_semaphores: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,22c1
+< Spawining threads. (20)
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+< Done.
+---
+> /home/pn-cs453/lib/asgn2//testlib/19_semaphores/19_semaphores: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 20: Dine with semaphores
+
+Dining philosophers synchronized by a scheduler that supports
+semaphores.
+
+
+
+
+----------
+Reference:
+----------
+|=============|=============|=============|=============|=============|
+|      A      |      B      |      C      |      D      |      E      |
+|=============|=============|=============|=============|=============|
+| -----       | -----       | -----       | -----       | -----       |
+| -----       | -1---       | -----       | -----       | -----       |
+| -----       | -12--       | -----       | -----       | -----       |
+| -----       | -12-- Eat   | -----       | -----       | -----       |
+| -----       | -12-- Eat   | -----       | -----       | 0----       |
+| -----       | -12-- Eat   | -----       | ---3-       | 0----       |
+| -----       | -12-- Eat   | -----       | ---3-       | 0---4       |
+| -----       | -12-- Eat   | -----       | ---3-       | 0---4 Eat   |
+| -----       | -12--       | -----       | ---3-       | 0---4 Eat   |
+| -----       | --2--       | -----       | ---3-       | 0---4 Eat   |
+| -----       | -----       | -----       | ---3-       | 0---4 Eat   |
+| -----       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+| -1---       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+| -1---       | ----- Think | -----       | ---3-       | 0---4       |
+| -1---       | ----- Think | -----       | ---3-       | ----4       |
+| -1---       | ----- Think | -----       | ---3-       | -----       |
+| -1---       | ----- Think | -----       | ---3-       | ----- Think |
+| 01---       | ----- Think | -----       | ---3-       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---3-       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 0----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| ----- Think | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01--- Eat   | -----       | -----       | ---34 Eat   | ----- Think |
+| 01---       | -----       | -----       | ---34 Eat   | ----- Think |
+| 0----       | -----       | -----       | ---34 Eat   | ----- Think |
+| -----       | -----       | -----       | ---34 Eat   | ----- Think |
+| ----- Think | -----       | -----       | ---34 Eat   | ----- Think |
+| ----- Think | -1---       | -----       | ---34 Eat   | ----- Think |
+| ----- Think | -12--       | -----       | ---34 Eat   | ----- Think |
+| ----- Think | -12-- Eat   | -----       | ---34 Eat   | ----- Think |
+| ----- Think | -12-- Eat   | -----       | ---34 Eat   | -----       |
+| ----- Think | -12-- Eat   | -----       | ---34 Eat   | 0----       |
+| ----- Think | -12-- Eat   | -----       | ---34       | 0----       |
+| ----- Think | -12-- Eat   | -----       | ----4       | 0----       |
+| ----- Think | -12-- Eat   | -----       | -----       | 0----       |
+| ----- Think | -12-- Eat   | -----       | ----- Think | 0----       |
+| ----- Think | -12-- Eat   | ---3-       | ----- Think | 0----       |
+| ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4       |
+| ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+| ----- Think | -12--       | ---3-       | ----- Think | 0---4 Eat   |
+| ----- Think | --2--       | ---3-       | ----- Think | 0---4 Eat   |
+| ----- Think | -----       | ---3-       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | ---3-       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | --2--       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | -----       | ----- Think | 0---4 Eat   |
+| ----- Think | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+| ----- Think | -----       | ----- Think | ----- Think | 0---4 Eat   |
+| ----- Think | -1---       | ----- Think | ----- Think | 0---4 Eat   |
+| ----- Think | -12--       | ----- Think | ----- Think | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+| -----       | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+| -----       | -12--       | ----- Think | ----- Think | 0---4 Eat   |
+| -----       | --2--       | ----- Think | ----- Think | 0---4 Eat   |
+| -----       | -----       | ----- Think | ----- Think | 0---4 Eat   |
+| -----       | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+| -1---       | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+| -1---       | ----- Think | ----- Think | -----       | 0---4 Eat   |
+| -1---       | ----- Think | ----- Think | ---3-       | 0---4 Eat   |
+| -1---       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+| -1---       | ----- Think | -----       | ---3-       | 0---4       |
+| -1---       | ----- Think | -----       | ---3-       | ----4       |
+| -1---       | ----- Think | -----       | ---3-       | -----       |
+| -1---       | ----- Think | -----       | ---3-       | ----- Think |
+| -1---       | ----- Think | -----       | ---34       | ----- Think |
+| -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 0----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| ----- Think | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ---34       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ----4       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | -----       | ----- Think |
+| 01--- Eat   | ----- Think | -----       | ----- Think | ----- Think |
+| 01--- Eat   | ----- Think | ---3-       | ----- Think | ----- Think |
+| 01--- Eat   | ----- Think | --23-       | ----- Think | ----- Think |
+| 01--- Eat   | ----- Think | --23- Eat   | ----- Think | ----- Think |
+| 01--- Eat   | ----- Think | --23- Eat   | -----       | ----- Think |
+| 01--- Eat   | -----       | --23- Eat   | -----       | ----- Think |
+| 01--- Eat   | -----       | --23- Eat   | -----       | -----       |
+| 01--- Eat   | -----       | --23-       | -----       | -----       |
+| 01--- Eat   | -----       | --2--       | -----       | -----       |
+| 01--- Eat   | -----       | -----       | -----       | -----       |
+| 01--- Eat   | -----       | ----- Think | -----       | -----       |
+| 01--- Eat   | -----       | ----- Think | ---3-       | -----       |
+| 01--- Eat   | -----       | ----- Think | ---34       | -----       |
+| 01--- Eat   | -----       | ----- Think | ---34 Eat   | -----       |
+| 01---       | -----       | ----- Think | ---34 Eat   | -----       |
+| 0----       | -----       | ----- Think | ---34 Eat   | -----       |
+| -----       | -----       | ----- Think | ---34 Eat   | -----       |
+| ----- Think | -----       | ----- Think | ---34 Eat   | -----       |
+| ----- Think | -1---       | ----- Think | ---34 Eat   | -----       |
+| ----- Think | -12--       | ----- Think | ---34 Eat   | -----       |
+| ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | -----       |
+| ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | 0----       |
+| ----- Think | -12-- Eat   | ----- Think | ---34       | 0----       |
+| ----- Think | -12-- Eat   | ----- Think | ----4       | 0----       |
+| ----- Think | -12-- Eat   | ----- Think | -----       | 0----       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | 0----       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | ----4       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | -----       |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | -----       |
+| ----- Think | -12-- Eat   | -----       | ----- Think | -----       |
+| ----- Think | -12-- Eat   | -----       | ----- Think | 0----       |
+| ----- Think | -12-- Eat   | -----       | ----- Think | 0---4       |
+| ----- Think | -12-- Eat   | -----       | ----- Think | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | -12--       | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | --2--       | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | -----       | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | ----- Think | ---3-       | ----- Think | 0---4 Eat   |
+| -----       | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+| -----       | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+| -1---       | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+| -1---       | ----- Think | --23- Eat   | -----       | 0---4 Eat   |
+| -1---       | -----       | --23- Eat   | -----       | 0---4 Eat   |
+| -1---       | -----       | --23- Eat   | -----       | 0---4       |
+| -1---       | -----       | --23- Eat   | -----       | ----4       |
+| -1---       | -----       | --23- Eat   | -----       | -----       |
+| -1---       | -----       | --23- Eat   | -----       | ----- Think |
+| 01---       | -----       | --23- Eat   | -----       | ----- Think |
+| 01--- Eat   | -----       | --23- Eat   | -----       | ----- Think |
+| 01---       | -----       | --23- Eat   | -----       | ----- Think |
+| 0----       | -----       | --23- Eat   | -----       | ----- Think |
+| -----       | -----       | --23- Eat   | -----       | ----- Think |
+| ----- Think | -----       | --23- Eat   | -----       | ----- Think |
+| ----- Think | -1---       | --23- Eat   | -----       | ----- Think |
+| ----- Think | -1---       | --23- Eat   | -----       | -----       |
+| ----- Think | -1---       | --23- Eat   | -----       | 0----       |
+| ----- Think | -1---       | --23- Eat   | -----       | 0---4       |
+| ----- Think | -1---       | --23- Eat   | -----       | 0---4 Eat   |
+| ----- Think | -1---       | --23-       | -----       | 0---4 Eat   |
+| ----- Think | -1---       | --2--       | -----       | 0---4 Eat   |
+| ----- Think | -1---       | -----       | -----       | 0---4 Eat   |
+| ----- Think | -1---       | ----- Think | -----       | 0---4 Eat   |
+| ----- Think | -12--       | ----- Think | -----       | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ----- Think | -----       | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ----- Think | ---3-       | 0---4 Eat   |
+| ----- Think | -12-- Eat   | ----- Think | ---3-       | 0---4       |
+| ----- Think | -12-- Eat   | ----- Think | ---3-       | ----4       |
+| ----- Think | -12-- Eat   | ----- Think | ---3-       | -----       |
+| ----- Think | -12-- Eat   | ----- Think | ---3-       | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ---34       | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ---34       | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ----4       | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | -----       | ----- Think |
+| ----- Think | -12-- Eat   | ----- Think | ----- Think | ----- Think |
+| ----- Think | -12-- Eat   | -----       | ----- Think | ----- Think |
+| ----- Think | -12-- Eat   | ---3-       | ----- Think | ----- Think |
+| ----- Think | -12-- Eat   | ---3-       | -----       | ----- Think |
+| -----       | -12-- Eat   | ---3-       | -----       | ----- Think |
+| -----       | -12-- Eat   | ---3-       | -----       | -----       |
+| -----       | -12--       | ---3-       | -----       | -----       |
+| -----       | --2--       | ---3-       | -----       | -----       |
+| -----       | -----       | ---3-       | -----       | -----       |
+| -----       | ----- Think | ---3-       | -----       | -----       |
+| -----       | ----- Think | --23-       | -----       | -----       |
+| -----       | ----- Think | --23- Eat   | -----       | -----       |
+| -----       | -----       | --23- Eat   | -----       | -----       |
+| -----       | -----       | --23-       | -----       | -----       |
+| -----       | -----       | --2--       | -----       | -----       |
+| -----       | -----       | -----       | -----       | -----       |
+| -----       | -----       | ----- Think | -----       | -----       |
+| -----       | -----       | ----- Think | ---3-       | -----       |
+| -----       | -----       | ----- Think | ---34       | -----       |
+| -----       | -----       | ----- Think | ---34 Eat   | -----       |
+| -----       | -----       | -----       | ---34 Eat   | -----       |
+| -----       | -----       | -----       | ---34       | -----       |
+| -----       | -----       | -----       | ----4       | -----       |
+| -----       | -----       | -----       | -----       | -----       |
+| -----       | -----       | -----       | ----- Think | -----       |
+| -----       | -----       | ---3-       | ----- Think | -----       |
+| -----       | -----       | --23-       | ----- Think | -----       |
+| -----       | -----       | --23- Eat   | ----- Think | -----       |
+| -----       | -----       | --23-       | ----- Think | -----       |
+| -----       | -----       | --2--       | ----- Think | -----       |
+| -----       | -----       | -----       | ----- Think | -----       |
+| -----       | -----       | ----- Think | ----- Think | -----       |
+| -----       | -----       | ----- Think | -----       | -----       |
+| -----       | -----       | -----       | -----       | -----       |
+|=============|=============|=============|=============|=============|
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/20_semaphores_dine/20_semaphores_dine: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,205c1
+< |=============|=============|=============|=============|=============|
+< |      A      |      B      |      C      |      D      |      E      |
+< |=============|=============|=============|=============|=============|
+< | -----       | -----       | -----       | -----       | -----       |
+< | -----       | -1---       | -----       | -----       | -----       |
+< | -----       | -12--       | -----       | -----       | -----       |
+< | -----       | -12-- Eat   | -----       | -----       | -----       |
+< | -----       | -12-- Eat   | -----       | -----       | 0----       |
+< | -----       | -12-- Eat   | -----       | ---3-       | 0----       |
+< | -----       | -12-- Eat   | -----       | ---3-       | 0---4       |
+< | -----       | -12-- Eat   | -----       | ---3-       | 0---4 Eat   |
+< | -----       | -12--       | -----       | ---3-       | 0---4 Eat   |
+< | -----       | --2--       | -----       | ---3-       | 0---4 Eat   |
+< | -----       | -----       | -----       | ---3-       | 0---4 Eat   |
+< | -----       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+< | -1---       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+< | -1---       | ----- Think | -----       | ---3-       | 0---4       |
+< | -1---       | ----- Think | -----       | ---3-       | ----4       |
+< | -1---       | ----- Think | -----       | ---3-       | -----       |
+< | -1---       | ----- Think | -----       | ---3-       | ----- Think |
+< | 01---       | ----- Think | -----       | ---3-       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---3-       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 0----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01--- Eat   | -----       | -----       | ---34 Eat   | ----- Think |
+< | 01---       | -----       | -----       | ---34 Eat   | ----- Think |
+< | 0----       | -----       | -----       | ---34 Eat   | ----- Think |
+< | -----       | -----       | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | -----       | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | -1---       | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | -12--       | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | -12-- Eat   | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | -12-- Eat   | -----       | ---34 Eat   | -----       |
+< | ----- Think | -12-- Eat   | -----       | ---34 Eat   | 0----       |
+< | ----- Think | -12-- Eat   | -----       | ---34       | 0----       |
+< | ----- Think | -12-- Eat   | -----       | ----4       | 0----       |
+< | ----- Think | -12-- Eat   | -----       | -----       | 0----       |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | 0----       |
+< | ----- Think | -12-- Eat   | ---3-       | ----- Think | 0----       |
+< | ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4       |
+< | ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+< | ----- Think | -12--       | ---3-       | ----- Think | 0---4 Eat   |
+< | ----- Think | --2--       | ---3-       | ----- Think | 0---4 Eat   |
+< | ----- Think | -----       | ---3-       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | ---3-       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | --2--       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | -----       | ----- Think | 0---4 Eat   |
+< | ----- Think | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+< | ----- Think | -----       | ----- Think | ----- Think | 0---4 Eat   |
+< | ----- Think | -1---       | ----- Think | ----- Think | 0---4 Eat   |
+< | ----- Think | -12--       | ----- Think | ----- Think | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+< | -----       | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+< | -----       | -12--       | ----- Think | ----- Think | 0---4 Eat   |
+< | -----       | --2--       | ----- Think | ----- Think | 0---4 Eat   |
+< | -----       | -----       | ----- Think | ----- Think | 0---4 Eat   |
+< | -----       | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+< | -1---       | ----- Think | ----- Think | ----- Think | 0---4 Eat   |
+< | -1---       | ----- Think | ----- Think | -----       | 0---4 Eat   |
+< | -1---       | ----- Think | ----- Think | ---3-       | 0---4 Eat   |
+< | -1---       | ----- Think | -----       | ---3-       | 0---4 Eat   |
+< | -1---       | ----- Think | -----       | ---3-       | 0---4       |
+< | -1---       | ----- Think | -----       | ---3-       | ----4       |
+< | -1---       | ----- Think | -----       | ---3-       | -----       |
+< | -1---       | ----- Think | -----       | ---3-       | ----- Think |
+< | -1---       | ----- Think | -----       | ---34       | ----- Think |
+< | -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 0----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | ----- Think | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -----       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | -1---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01---       | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34 Eat   | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ---34       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ----4       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | -----       | ----- Think |
+< | 01--- Eat   | ----- Think | -----       | ----- Think | ----- Think |
+< | 01--- Eat   | ----- Think | ---3-       | ----- Think | ----- Think |
+< | 01--- Eat   | ----- Think | --23-       | ----- Think | ----- Think |
+< | 01--- Eat   | ----- Think | --23- Eat   | ----- Think | ----- Think |
+< | 01--- Eat   | ----- Think | --23- Eat   | -----       | ----- Think |
+< | 01--- Eat   | -----       | --23- Eat   | -----       | ----- Think |
+< | 01--- Eat   | -----       | --23- Eat   | -----       | -----       |
+< | 01--- Eat   | -----       | --23-       | -----       | -----       |
+< | 01--- Eat   | -----       | --2--       | -----       | -----       |
+< | 01--- Eat   | -----       | -----       | -----       | -----       |
+< | 01--- Eat   | -----       | ----- Think | -----       | -----       |
+< | 01--- Eat   | -----       | ----- Think | ---3-       | -----       |
+< | 01--- Eat   | -----       | ----- Think | ---34       | -----       |
+< | 01--- Eat   | -----       | ----- Think | ---34 Eat   | -----       |
+< | 01---       | -----       | ----- Think | ---34 Eat   | -----       |
+< | 0----       | -----       | ----- Think | ---34 Eat   | -----       |
+< | -----       | -----       | ----- Think | ---34 Eat   | -----       |
+< | ----- Think | -----       | ----- Think | ---34 Eat   | -----       |
+< | ----- Think | -1---       | ----- Think | ---34 Eat   | -----       |
+< | ----- Think | -12--       | ----- Think | ---34 Eat   | -----       |
+< | ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | -----       |
+< | ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | 0----       |
+< | ----- Think | -12-- Eat   | ----- Think | ---34       | 0----       |
+< | ----- Think | -12-- Eat   | ----- Think | ----4       | 0----       |
+< | ----- Think | -12-- Eat   | ----- Think | -----       | 0----       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | 0----       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | 0---4       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | ----4       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | -----       |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | -----       |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | -----       |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | 0----       |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | 0---4       |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | -12-- Eat   | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | -12--       | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | --2--       | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | -----       | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | ----- Think | ---3-       | ----- Think | 0---4 Eat   |
+< | -----       | ----- Think | --23-       | ----- Think | 0---4 Eat   |
+< | -----       | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+< | -1---       | ----- Think | --23- Eat   | ----- Think | 0---4 Eat   |
+< | -1---       | ----- Think | --23- Eat   | -----       | 0---4 Eat   |
+< | -1---       | -----       | --23- Eat   | -----       | 0---4 Eat   |
+< | -1---       | -----       | --23- Eat   | -----       | 0---4       |
+< | -1---       | -----       | --23- Eat   | -----       | ----4       |
+< | -1---       | -----       | --23- Eat   | -----       | -----       |
+< | -1---       | -----       | --23- Eat   | -----       | ----- Think |
+< | 01---       | -----       | --23- Eat   | -----       | ----- Think |
+< | 01--- Eat   | -----       | --23- Eat   | -----       | ----- Think |
+< | 01---       | -----       | --23- Eat   | -----       | ----- Think |
+< | 0----       | -----       | --23- Eat   | -----       | ----- Think |
+< | -----       | -----       | --23- Eat   | -----       | ----- Think |
+< | ----- Think | -----       | --23- Eat   | -----       | ----- Think |
+< | ----- Think | -1---       | --23- Eat   | -----       | ----- Think |
+< | ----- Think | -1---       | --23- Eat   | -----       | -----       |
+< | ----- Think | -1---       | --23- Eat   | -----       | 0----       |
+< | ----- Think | -1---       | --23- Eat   | -----       | 0---4       |
+< | ----- Think | -1---       | --23- Eat   | -----       | 0---4 Eat   |
+< | ----- Think | -1---       | --23-       | -----       | 0---4 Eat   |
+< | ----- Think | -1---       | --2--       | -----       | 0---4 Eat   |
+< | ----- Think | -1---       | -----       | -----       | 0---4 Eat   |
+< | ----- Think | -1---       | ----- Think | -----       | 0---4 Eat   |
+< | ----- Think | -12--       | ----- Think | -----       | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ----- Think | -----       | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ----- Think | ---3-       | 0---4 Eat   |
+< | ----- Think | -12-- Eat   | ----- Think | ---3-       | 0---4       |
+< | ----- Think | -12-- Eat   | ----- Think | ---3-       | ----4       |
+< | ----- Think | -12-- Eat   | ----- Think | ---3-       | -----       |
+< | ----- Think | -12-- Eat   | ----- Think | ---3-       | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ---34       | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ---34 Eat   | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ---34       | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ----4       | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | -----       | ----- Think |
+< | ----- Think | -12-- Eat   | ----- Think | ----- Think | ----- Think |
+< | ----- Think | -12-- Eat   | -----       | ----- Think | ----- Think |
+< | ----- Think | -12-- Eat   | ---3-       | ----- Think | ----- Think |
+< | ----- Think | -12-- Eat   | ---3-       | -----       | ----- Think |
+< | -----       | -12-- Eat   | ---3-       | -----       | ----- Think |
+< | -----       | -12-- Eat   | ---3-       | -----       | -----       |
+< | -----       | -12--       | ---3-       | -----       | -----       |
+< | -----       | --2--       | ---3-       | -----       | -----       |
+< | -----       | -----       | ---3-       | -----       | -----       |
+< | -----       | ----- Think | ---3-       | -----       | -----       |
+< | -----       | ----- Think | --23-       | -----       | -----       |
+< | -----       | ----- Think | --23- Eat   | -----       | -----       |
+< | -----       | -----       | --23- Eat   | -----       | -----       |
+< | -----       | -----       | --23-       | -----       | -----       |
+< | -----       | -----       | --2--       | -----       | -----       |
+< | -----       | -----       | -----       | -----       | -----       |
+< | -----       | -----       | ----- Think | -----       | -----       |
+< | -----       | -----       | ----- Think | ---3-       | -----       |
+< | -----       | -----       | ----- Think | ---34       | -----       |
+< | -----       | -----       | ----- Think | ---34 Eat   | -----       |
+< | -----       | -----       | -----       | ---34 Eat   | -----       |
+< | -----       | -----       | -----       | ---34       | -----       |
+< | -----       | -----       | -----       | ----4       | -----       |
+< | -----       | -----       | -----       | -----       | -----       |
+< | -----       | -----       | -----       | ----- Think | -----       |
+< | -----       | -----       | ---3-       | ----- Think | -----       |
+< | -----       | -----       | --23-       | ----- Think | -----       |
+< | -----       | -----       | --23- Eat   | ----- Think | -----       |
+< | -----       | -----       | --23-       | ----- Think | -----       |
+< | -----       | -----       | --2--       | ----- Think | -----       |
+< | -----       | -----       | -----       | ----- Think | -----       |
+< | -----       | -----       | ----- Think | ----- Think | -----       |
+< | -----       | -----       | ----- Think | -----       | -----       |
+< | -----       | -----       | -----       | -----       | -----       |
+< |=============|=============|=============|=============|=============|
+---
+> /home/pn-cs453/lib/asgn2//testlib/20_semaphores_dine/20_semaphores_dine: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 21: Transfer threads between schedulers (stopped)
+
+Create a number of threads, then set_scheduler() and see if 
+they transfer properly.
+
+
+
+
+
+----------
+Reference:
+----------
+Creating LWPS
+Setting the scheduler.
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+         2
+              3
+                   4
+                        5
+              3
+                   4
+                        5
+                   4
+                        5
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+Creating LWPS
+Setting the scheduler.
+Launching LWPS
+Back from LWPS.
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+4,18d3
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<          2
+<               3
+<                    4
+<                         5
+<               3
+<                    4
+<                         5
+<                    4
+<                         5
+<                         5
+---------
+=================================================
+TEST 22: Transfer threads between schedulers (live)
+
+Create a number of threads, start them running,
+then set_scheduler() and see if they transfer properly.
+
+
+
+
+
+----------
+Reference:
+----------
+Creating LWPS
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+Setting the scheduler.
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/22_sched_transfer_live/22_sched_transfer_live: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,34c1
+< Creating LWPS
+< Launching LWPS
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+< Setting the scheduler.
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/22_sched_transfer_live/22_sched_transfer_live: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 23: Sched->next() returns NULL to lwp_yield()
+
+Has a scheduler that returns a thread once, then NULL thereafter.
+
+
+
+
+
+----------
+Reference:
+----------
+Before the LWPS.
+First print in threadfun().
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/23_sched_returns_NULL/23_sched_returns_NULL: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,3c1
+< Before the LWPS.
+< First print in threadfun().
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/23_sched_returns_NULL/23_sched_returns_NULL: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 24: Transfer threads between schedulers check for init/shutdown
+
+Create a number of threads, start them running,
+then set_scheduler() and see if they transfer properly.
+
+
+
+
+
+----------
+Reference:
+----------
+init: called on first scheduler
+Creating LWPS
+Admitting new thread to First scheduler
+Admitting new thread to First scheduler
+Admitting new thread to First scheduler
+Admitting new thread to First scheduler
+Admitting new thread to First scheduler
+Launching LWPS
+(first->next())
+    1
+(first->next())
+         2
+(first->next())
+              3
+(first->next())
+                   4
+(first->next())
+                        5
+(first->next())
+    1
+(first->next())
+         2
+(first->next())
+              3
+(first->next())
+                   4
+(first->next())
+                        5
+(first->next())
+    1
+(first->next())
+         2
+(first->next())
+              3
+(first->next())
+                   4
+(first->next())
+                        5
+Setting the scheduler.
+init: called on second scheduler
+(first->next())
+Removing thread from First scheduler
+Admitting new thread to Second scheduler
+(first->next())
+Removing thread from First scheduler
+Admitting new thread to Second scheduler
+(first->next())
+Removing thread from First scheduler
+Admitting new thread to Second scheduler
+(first->next())
+Removing thread from First scheduler
+Admitting new thread to Second scheduler
+(first->next())
+Removing thread from First scheduler
+Admitting new thread to Second scheduler
+(first->next())
+shutdown: called on first scheduler
+(second->next())
+    1
+(second->next())
+         2
+(second->next())
+              3
+(second->next())
+                   4
+(second->next())
+                        5
+(second->next())
+    1
+(second->next())
+         2
+(second->next())
+              3
+(second->next())
+                   4
+(second->next())
+                        5
+(second->next())
+    1
+(second->next())
+         2
+(second->next())
+              3
+(second->next())
+                   4
+(second->next())
+                        5
+(second->next())
+Removing thread from Second scheduler
+(second->next())
+Removing thread from Second scheduler
+(second->next())
+Removing thread from Second scheduler
+(second->next())
+Removing thread from Second scheduler
+(second->next())
+Removing thread from Second scheduler
+(second->next())
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/24_SchedStartupShutdown/24_SchedStartupShutdown: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,99c1
+< init: called on first scheduler
+< Creating LWPS
+< Admitting new thread to First scheduler
+< Admitting new thread to First scheduler
+< Admitting new thread to First scheduler
+< Admitting new thread to First scheduler
+< Admitting new thread to First scheduler
+< Launching LWPS
+< (first->next())
+<     1
+< (first->next())
+<          2
+< (first->next())
+<               3
+< (first->next())
+<                    4
+< (first->next())
+<                         5
+< (first->next())
+<     1
+< (first->next())
+<          2
+< (first->next())
+<               3
+< (first->next())
+<                    4
+< (first->next())
+<                         5
+< (first->next())
+<     1
+< (first->next())
+<          2
+< (first->next())
+<               3
+< (first->next())
+<                    4
+< (first->next())
+<                         5
+< Setting the scheduler.
+< init: called on second scheduler
+< (first->next())
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< shutdown: called on first scheduler
+< (second->next())
+<     1
+< (second->next())
+<          2
+< (second->next())
+<               3
+< (second->next())
+<                    4
+< (second->next())
+<                         5
+< (second->next())
+<     1
+< (second->next())
+<          2
+< (second->next())
+<               3
+< (second->next())
+<                    4
+< (second->next())
+<                         5
+< (second->next())
+<     1
+< (second->next())
+<          2
+< (second->next())
+<               3
+< (second->next())
+<                    4
+< (second->next())
+<                         5
+< (second->next())
+< Removing thread from Second scheduler
+< (second->next())
+< Removing thread from Second scheduler
+< (second->next())
+< Removing thread from Second scheduler
+< (second->next())
+< Removing thread from Second scheduler
+< (second->next())
+< Removing thread from Second scheduler
+< (second->next())
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/24_SchedStartupShutdown/24_SchedStartupShutdown: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 26: Does tid2thread return the right thread?
+
+This is the similar numbersmain program distributed with the
+assignment, but with a scheduler that returns a random thread.
+(seeded, so reproducible).  After 50 iterations, the last thread runs
+through the list of all threads and sees if tid2thread is returning
+the right context.
+
+
+
+----------
+Reference:
+----------
+Launching LWPS
+         2
+                                            9
+                                            9
+                                  7
+              3
+    1
+         2
+                        5
+         2
+              3
+                                       8
+              3
+                                       8
+                             6
+         2
+                             6
+              3
+              3
+    1
+         2
+    1
+                                            9
+                             6
+              3
+         2
+    1
+                                            9
+                   4
+                        5
+                             6
+         2
+         2
+         2
+                        5
+    1
+                   4
+                        5
+              3
+                                  7
+                        5
+         2
+         2
+         2
+                   4
+                                            9
+                   4
+                                            9
+         2
+                   4
+                                  7
+                                            9
+    1
+         2
+    1
+                                            9
+                                            9
+                        5
+    1
+                        5
+                                            9
+                             6
+                             6
+         2
+                                       8
+    1
+                                            9
+                                  7
+    1
+                        5
+                                  7
+                                  7
+                                  7
+                                  7
+                                  7
+                                            9
+                             6
+                                       8
+                   4
+    1
+                             6
+                   4
+    1
+                                  7
+                             6
+         2
+                        5
+         2
+                   4
+              3
+                   4
+    1
+                                  7
+                             6
+                             6
+                                  7
+                                       8
+                             6
+                             6
+                                            9
+         2
+         2
+              3
+                        5
+                             6
+                        5
+                                       8
+                   4
+                             6
+              3
+              3
+    1
+              3
+    1
+              3
+         2
+              3
+                                            9
+                        5
+                             6
+         2
+                             6
+              3
+              3
+                                  7
+                   4
+                             6
+                                            9
+         2
+         2
+                             6
+                                            9
+                                  7
+              3
+                             6
+              3
+                                       8
+              3
+                        5
+    1
+              3
+                   4
+                                  7
+                                            9
+                                       8
+         2
+                   4
+                   4
+                   4
+         2
+                   4
+                                       8
+         2
+                                       8
+    1
+                             6
+                                  7
+                                            9
+                             6
+    1
+              3
+                        5
+              3
+         2
+                                  7
+                                       8
+                   4
+                        5
+                                            9
+                                       8
+              3
+                                            9
+                                  7
+              3
+         2
+                                       8
+                                       8
+                                  7
+         2
+         2
+                                            9
+                   4
+                             6
+                        5
+                             6
+         2
+                   4
+                                  7
+                        5
+                   4
+         2
+    1
+         2
+                        5
+              3
+                                       8
+    1
+                   4
+    1
+                                  7
+                                  7
+                                            9
+    1
+                                       8
+                             6
+                        5
+                                  7
+              3
+    1
+                                       8
+              3
+                             6
+                             6
+              3
+              3
+                        5
+                        5
+                                  7
+    1
+                                  7
+                                            9
+                                       8
+                   4
+                        5
+                                  7
+                                       8
+                        5
+                                  7
+                                            9
+         2
+                                            9
+              3
+                        5
+         2
+    1
+                                       8
+         2
+         2
+                             6
+                                       8
+                   4
+              3
+                             6
+         2
+                        5
+                                            9
+                        5
+                                            9
+                   4
+              3
+                   4
+    1
+                                       8
+              3
+                                            9
+                                  7
+              3
+                             6
+                        5
+              3
+                             6
+              3
+         2
+                                  7
+                                       8
+                        5
+                                  7
+              3
+                                            9
+                             6
+         2
+         2
+                        5
+                   4
+                                            9
+                             6
+                                  7
+                                            9
+                                       8
+                        5
+                   4
+                   4
+                        5
+              3
+                        5
+              3
+                             6
+                   4
+                             6
+                                       8
+              3
+                             6
+              3
+                   4
+                   4
+              3
+    1
+              3
+                        5
+                                  7
+                   4
+         2
+                   4
+                   4
+    1
+                                  7
+         2
+                                       8
+                        5
+                                            9
+              3
+                                       8
+    1
+                        5
+                             6
+                                            9
+              3
+                                       8
+                                  7
+    1
+                             6
+                                            9
+                             6
+                                  7
+    1
+                        5
+              3
+         2
+                             6
+                             6
+                                       8
+                                            9
+                                  7
+                                            9
+                                       8
+    1
+                                  7
+                                            9
+                                       8
+         2
+                             6
+                             6
+                   4
+                                       8
+                   4
+              3
+    1
+                                  7
+                                            9
+                                  7
+                                  7
+                             6
+                        5
+                                            9
+                                            9
+         2
+                                            9
+                                  7
+                                            9
+         2
+                                  7
+                                            9
+         2
+                        5
+                                  7
+                             6
+                                            9
+                                            9
+    1
+                   4
+                        5
+    1
+         2
+    1
+                                            9
+                             6
+                        5
+         2
+              3
+                   4
+                                       8
+                                  7
+                        5
+                                            9
+                   4
+                                            9
+Checking thread IDs...
+...done.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/26_tid2thread/26_tid2thread: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,388c1
+< Launching LWPS
+<          2
+<                                             9
+<                                             9
+<                                   7
+<               3
+<     1
+<          2
+<                         5
+<          2
+<               3
+<                                        8
+<               3
+<                                        8
+<                              6
+<          2
+<                              6
+<               3
+<               3
+<     1
+<          2
+<     1
+<                                             9
+<                              6
+<               3
+<          2
+<     1
+<                                             9
+<                    4
+<                         5
+<                              6
+<          2
+<          2
+<          2
+<                         5
+<     1
+<                    4
+<                         5
+<               3
+<                                   7
+<                         5
+<          2
+<          2
+<          2
+<                    4
+<                                             9
+<                    4
+<                                             9
+<          2
+<                    4
+<                                   7
+<                                             9
+<     1
+<          2
+<     1
+<                                             9
+<                                             9
+<                         5
+<     1
+<                         5
+<                                             9
+<                              6
+<                              6
+<          2
+<                                        8
+<     1
+<                                             9
+<                                   7
+<     1
+<                         5
+<                                   7
+<                                   7
+<                                   7
+<                                   7
+<                                   7
+<                                             9
+<                              6
+<                                        8
+<                    4
+<     1
+<                              6
+<                    4
+<     1
+<                                   7
+<                              6
+<          2
+<                         5
+<          2
+<                    4
+<               3
+<                    4
+<     1
+<                                   7
+<                              6
+<                              6
+<                                   7
+<                                        8
+<                              6
+<                              6
+<                                             9
+<          2
+<          2
+<               3
+<                         5
+<                              6
+<                         5
+<                                        8
+<                    4
+<                              6
+<               3
+<               3
+<     1
+<               3
+<     1
+<               3
+<          2
+<               3
+<                                             9
+<                         5
+<                              6
+<          2
+<                              6
+<               3
+<               3
+<                                   7
+<                    4
+<                              6
+<                                             9
+<          2
+<          2
+<                              6
+<                                             9
+<                                   7
+<               3
+<                              6
+<               3
+<                                        8
+<               3
+<                         5
+<     1
+<               3
+<                    4
+<                                   7
+<                                             9
+<                                        8
+<          2
+<                    4
+<                    4
+<                    4
+<          2
+<                    4
+<                                        8
+<          2
+<                                        8
+<     1
+<                              6
+<                                   7
+<                                             9
+<                              6
+<     1
+<               3
+<                         5
+<               3
+<          2
+<                                   7
+<                                        8
+<                    4
+<                         5
+<                                             9
+<                                        8
+<               3
+<                                             9
+<                                   7
+<               3
+<          2
+<                                        8
+<                                        8
+<                                   7
+<          2
+<          2
+<                                             9
+<                    4
+<                              6
+<                         5
+<                              6
+<          2
+<                    4
+<                                   7
+<                         5
+<                    4
+<          2
+<     1
+<          2
+<                         5
+<               3
+<                                        8
+<     1
+<                    4
+<     1
+<                                   7
+<                                   7
+<                                             9
+<     1
+<                                        8
+<                              6
+<                         5
+<                                   7
+<               3
+<     1
+<                                        8
+<               3
+<                              6
+<                              6
+<               3
+<               3
+<                         5
+<                         5
+<                                   7
+<     1
+<                                   7
+<                                             9
+<                                        8
+<                    4
+<                         5
+<                                   7
+<                                        8
+<                         5
+<                                   7
+<                                             9
+<          2
+<                                             9
+<               3
+<                         5
+<          2
+<     1
+<                                        8
+<          2
+<          2
+<                              6
+<                                        8
+<                    4
+<               3
+<                              6
+<          2
+<                         5
+<                                             9
+<                         5
+<                                             9
+<                    4
+<               3
+<                    4
+<     1
+<                                        8
+<               3
+<                                             9
+<                                   7
+<               3
+<                              6
+<                         5
+<               3
+<                              6
+<               3
+<          2
+<                                   7
+<                                        8
+<                         5
+<                                   7
+<               3
+<                                             9
+<                              6
+<          2
+<          2
+<                         5
+<                    4
+<                                             9
+<                              6
+<                                   7
+<                                             9
+<                                        8
+<                         5
+<                    4
+<                    4
+<                         5
+<               3
+<                         5
+<               3
+<                              6
+<                    4
+<                              6
+<                                        8
+<               3
+<                              6
+<               3
+<                    4
+<                    4
+<               3
+<     1
+<               3
+<                         5
+<                                   7
+<                    4
+<          2
+<                    4
+<                    4
+<     1
+<                                   7
+<          2
+<                                        8
+<                         5
+<                                             9
+<               3
+<                                        8
+<     1
+<                         5
+<                              6
+<                                             9
+<               3
+<                                        8
+<                                   7
+<     1
+<                              6
+<                                             9
+<                              6
+<                                   7
+<     1
+<                         5
+<               3
+<          2
+<                              6
+<                              6
+<                                        8
+<                                             9
+<                                   7
+<                                             9
+<                                        8
+<     1
+<                                   7
+<                                             9
+<                                        8
+<          2
+<                              6
+<                              6
+<                    4
+<                                        8
+<                    4
+<               3
+<     1
+<                                   7
+<                                             9
+<                                   7
+<                                   7
+<                              6
+<                         5
+<                                             9
+<                                             9
+<          2
+<                                             9
+<                                   7
+<                                             9
+<          2
+<                                   7
+<                                             9
+<          2
+<                         5
+<                                   7
+<                              6
+<                                             9
+<                                             9
+<     1
+<                    4
+<                         5
+<     1
+<          2
+<     1
+<                                             9
+<                              6
+<                         5
+<          2
+<               3
+<                    4
+<                                        8
+<                                   7
+<                         5
+<                                             9
+<                    4
+<                                             9
+< Checking thread IDs...
+< ...done.
+---
+> /home/pn-cs453/lib/asgn2//testlib/26_tid2thread/26_tid2thread: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
+=================================================
+TEST 27: Tid2thread() returns NULL given a bad tid?
+
+This launches a single thread, then calls tid2thread with 
+a threadID that isn't it.  Tid2thread should return NULL.
+
+
+----------
+Reference:
+----------
+Launching LWPS
+Back from LWPS.
+----------
+Submitted:
+----------
+/home/pn-cs453/lib/asgn2//testlib/27_tid2thread_bogus/27_tid2thread_bogus: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,2c1
+< Launching LWPS
+< Back from LWPS.
+---
+> /home/pn-cs453/lib/asgn2//testlib/27_tid2thread_bogus/27_tid2thread_bogus: symbol lookup error: ./liblwp.so: undefined symbol: swap_rfiles
+---------
