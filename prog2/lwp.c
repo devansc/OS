@@ -12,13 +12,13 @@
 
 struct scheduler rrScdlr = {NULL, NULL, rr_admit, rr_remove, rr_next};
 scheduler rrScheduler = &rrScdlr;
-scheduler currentScheduler;
+scheduler currentScheduler = NULL;
 
 static context systemContext;
-thread systemThread;
+thread systemThread = NULL;
 
 tid_t nextTid = 1;
-thread curThread;
+thread curThread = NULL;
 
 void printStack(thread t) {
     printf("STACK: pos %p\n", t->stack);
@@ -37,6 +37,7 @@ void rr_admit(thread newThread) {
     if (systemThread->firstContext == NULL) {
         systemThread->firstContext = systemThread->lastContext = newThread;
         systemThread->nextThread = newThread;
+        newThread->nextThread = newThread->lastThread = newThread;
         return;
     }
 
@@ -48,21 +49,24 @@ void rr_admit(thread newThread) {
 }
 
 void rr_remove(thread victim) {
-    if (victim->lastThread != NULL) {
-        victim->lastThread->nextThread = victim->nextThread;
-    }
-    if (victim->nextThread != NULL) {
-        victim->nextThread->lastThread = victim->lastThread;
+    victim->lastThread->nextThread = victim->nextThread;
+    victim->nextThread->lastThread = victim->lastThread;
+    if (victim == systemThread->firstContext) {
+        if (victim->nextThread != victim)
+            systemThread->nextThread = systemThread->firstContext = 
+                    victim->nextThread;
+        else
+            systemThread->nextThread = systemThread->firstContext = NULL;
     }
     // free(victim);  ??
 }
 
 thread rr_next() {
-    return curThread->nextThread;
+    return curThread ? curThread->nextThread : NULL;
 }
 
 tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
-    unsigned long *stack = malloc(stackSize * WORDSIZE);
+    unsigned long *stack = malloc((stackSize + 1) * WORDSIZE);
     unsigned long *sp = stack + stackSize - 1;
     rfile state;
     thread threadSpace = malloc(sizeof(context));
@@ -70,9 +74,13 @@ tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
 
     if (currentScheduler == NULL) {
         currentScheduler = rrScheduler;
+    } 
+    if (curThread == NULL) {
         systemThread = &systemContext;
         curThread = systemThread;
     }
+
+    sp = (char *)sp - ((unsigned long)sp % 16);
 
     *sp-- = (unsigned long) lwp_exit;
     *sp-- = (unsigned long) func;
@@ -80,25 +88,38 @@ tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
     state.rdi = (unsigned long) arg;
 
     newContext = (context) {nextTid++, stack, stackSize, state, NULL, NULL,
-            NULL, NULL};  // TODO change sp to stack so I can free later
+            NULL, NULL};
     memcpy(threadSpace, &newContext, sizeof(context));
+    threadSpace->state.fxsave = FPU_INIT;
     currentScheduler->admit(threadSpace);
     return threadSpace->tid;
 }
 
 void lwp_exit() {
-    thread next = currentScheduler->next();
-    thread cur = curThread;
-    if (curThread == next) {
+    thread next;
+
+    currentScheduler->remove(curThread);
+    next = currentScheduler->next();
+
+    if (next == NULL || curThread == next) {
         return lwp_stop();
     }
-    curThread->lastThread->nextThread = next;
-    next->lastThread = curThread->lastThread;
-    // need to check first/lastContext in scheduler?
-    switchContext(next);
-    free(cur->stack);
-    free(cur);
+    SetSP(next->state.rsp);
+    //printf("freeing %p and %p\n", curThread->stack, curThread);
+    free(curThread->stack);
+    free(curThread);
+    curThread = next;
+    load_context(&next->state);
+    //switchContext(next);
+    //exit(0);
 }
+    /* old stuff for lwp_exit after the if(next==null) stmt
+    //curThread->lastThread->nextThread = next;
+    //next->lastThread = curThread->lastThread;
+    // need to check first/lastContext in scheduler?
+    //free(cur->stack);
+    //free(cur);
+    */
 
 tid_t lwp_gettid() {
     if (curThread == NULL) 
@@ -107,6 +128,7 @@ tid_t lwp_gettid() {
 }
 
 void lwp_stop() {
+    curThread = systemThread;
     load_context(&systemThread->state);
 }
 
@@ -120,17 +142,25 @@ void lwp_set_scheduler(scheduler new) {
 
 void switchContext(thread to) {
     thread old = curThread;
+
+    /* if to is NULL stay on same thread */
+    if (!to)
+        return;
+
     curThread = to;
     swap_rfiles(&(old->state), &(to->state));
 }
 
 void lwp_yield() {
-    thread next = currentScheduler->next();
-    switchContext(next);
+    thread next = NULL;
+    if (currentScheduler)
+        next = currentScheduler->next();
+    if (next)
+        switchContext(next);
 }
 
 void lwp_start() {
-    thread next;
+    thread next = NULL;
     if (currentScheduler)
         next = currentScheduler->next();
     if (next)
