@@ -101,7 +101,7 @@ void lwp_exit() {
     currentScheduler->remove(curThread);
     next = currentScheduler->next();
 
-    if (next == NULL || curThread == next) {
+    if (next == NULL || curThread == next) { // used to have if next==NULL
         return lwp_stop();
     }
     SetSP(next->state.rsp);
@@ -128,8 +128,10 @@ tid_t lwp_gettid() {
 }
 
 void lwp_stop() {
-    curThread = systemThread;
-    load_context(&systemThread->state);
+    //curThread = systemThread;
+    //load_context(&systemThread->state);
+    systemThread->nextThread = curThread->nextThread;
+    switchContext(systemThread);
 }
 
 scheduler lwp_get_scheduler() {

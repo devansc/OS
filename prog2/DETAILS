@@ -1,67 +1,4 @@
 =================================================
-TEST 13: Three lwps.  Stop, then restart
-
-This test spawns a three threads each of which stops and restarts
-several times.
-
-
-----------
-Reference:
-----------
-Starting LWPs...
-Test
-Test
-Test
-Test2
-Test2
-Test2
-Test3
-Test3
-Test3
-Test4
-Test4
-Test4
-Test5
-Test5
-Test5
-Test6
-Test6
-Test6
-Done.
-----------
-Submitted:
-----------
-Child process (9929) exited due to SIGSEGV.
-
----------------------------------
-Differences (< reference > output)
----------------------------------
-
-1,20c1
-< Starting LWPs...
-< Test
-< Test
-< Test
-< Test2
-< Test2
-< Test2
-< Test3
-< Test3
-< Test3
-< Test4
-< Test4
-< Test4
-< Test5
-< Test5
-< Test5
-< Test6
-< Test6
-< Test6
-< Done.
----
-> Child process (9929) exited due to SIGSEGV.
----------
-=================================================
 TEST 18: 1024 threads, random exit.
 
 Creat 1024 threads, each of which either yields or exits randomly until
@@ -78,7 +15,7 @@ Done.  Count is 50000. (Yielded 406869 times)
 ----------
 Submitted:
 ----------
-Child process (10019) exited due to SIGSEGV.
+Child process (15931) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -88,7 +25,7 @@ Differences (< reference > output)
 < Spawining 4096 threads.
 < Done.  Count is 50000. (Yielded 406869 times)
 ---
-> Child process (10019) exited due to SIGSEGV.
+> Child process (15931) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 19: Ping pong with semaphores
@@ -127,7 +64,7 @@ Done.
 ----------
 Submitted:
 ----------
-Child process (10041) exited due to SIGSEGV.
+Child process (15953) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -157,7 +94,7 @@ Differences (< reference > output)
 <    Ping...pong.
 < Done.
 ---
-> Child process (10041) exited due to SIGSEGV.
+> Child process (15953) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 21: Transfer threads between schedulers (stopped)
@@ -270,7 +207,7 @@ Back from LWPS.
 ----------
 Submitted:
 ----------
-Child process (10101) exited due to SIGSEGV.
+Child process (16013) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -312,7 +249,7 @@ Differences (< reference > output)
 <                         5
 < Back from LWPS.
 ---
-> Child process (10101) exited due to SIGSEGV.
+> Child process (16013) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 23: Sched->next() returns NULL to lwp_yield()
