@@ -1,33 +1,4 @@
 =================================================
-TEST 18: 1024 threads, random exit.
-
-Creat 1024 threads, each of which either yields or exits randomly until
-a counter reaches a given value.
-
-
-
-
-----------
-Reference:
-----------
-Spawining 4096 threads.
-Done.  Count is 50000. (Yielded 406869 times)
-----------
-Submitted:
-----------
-Child process (15931) exited due to SIGSEGV.
-
----------------------------------
-Differences (< reference > output)
----------------------------------
-
-1,2c1
-< Spawining 4096 threads.
-< Done.  Count is 50000. (Yielded 406869 times)
----
-> Child process (15931) exited due to SIGSEGV.
----------
-=================================================
 TEST 19: Ping pong with semaphores
 
 20 threads each of which either Pings or Pongs twice synchronized
@@ -64,7 +35,7 @@ Done.
 ----------
 Submitted:
 ----------
-Child process (15953) exited due to SIGSEGV.
+Child process (13861) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -94,7 +65,7 @@ Differences (< reference > output)
 <    Ping...pong.
 < Done.
 ---
-> Child process (15953) exited due to SIGSEGV.
+> Child process (13861) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 21: Transfer threads between schedulers (stopped)
@@ -207,7 +178,7 @@ Back from LWPS.
 ----------
 Submitted:
 ----------
-Child process (16013) exited due to SIGSEGV.
+Child process (13921) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -249,7 +220,7 @@ Differences (< reference > output)
 <                         5
 < Back from LWPS.
 ---
-> Child process (16013) exited due to SIGSEGV.
+> Child process (13921) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 23: Sched->next() returns NULL to lwp_yield()
