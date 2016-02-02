@@ -99,8 +99,8 @@ void lwp_exit() {
     }
     SetSP(next->state.rsp);
     free(curThread->stack);
-    //free(curThread);
     curThread = next;
+    //free(curThread);
     load_context(&next->state);
 }
 
@@ -120,18 +120,6 @@ scheduler lwp_get_scheduler() {
 }
 
 void lwp_set_scheduler(scheduler new) {
-    thread next = NULL;
-    if (!new)
-        return;
-    if (!currentScheduler) {
-        currentScheduler = new;
-        return;
-    }
-
-    while ((next = currentScheduler->next()) != NULL) {
-        new->admit(next);
-        currentScheduler->remove(next);
-    }
     currentScheduler = new;
 }
 

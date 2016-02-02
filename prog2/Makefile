@@ -17,7 +17,7 @@ all: 	$(PROGS)
 clean:	
 	rm -f $(OBJS) *~ TAGS
 
-nums: numbersmain.o liblwp.so lwp.o
+nums: numbersmain.o liblwp.so
 	$(LD) $(LDFLAGS) -o nums numbersmain.o -L. -llwp
 
 numbermain.o: lwp.h numbersmain.c

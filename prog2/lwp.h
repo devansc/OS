@@ -76,7 +76,7 @@ extern thread tid2thread(tid_t tid);
 void rr_admit(thread newThread);
 void rr_remove(thread victim);
 thread rr_next();
-thread tid2threadHelper(thread cur, tid_t tid);
+thread tid2threadHelper(thread cur, tid_t tid, tid_t seen, int itr);
 void switchContext(thread to);
 
 /* Macros for stack pointer manipulation:

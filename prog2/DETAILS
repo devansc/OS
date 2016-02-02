@@ -35,7 +35,7 @@ Done.
 ----------
 Submitted:
 ----------
-Child process (13861) exited due to SIGSEGV.
+Child process (23425) exited due to SIGSEGV.
 
 ---------------------------------
 Differences (< reference > output)
@@ -65,68 +65,7 @@ Differences (< reference > output)
 <    Ping...pong.
 < Done.
 ---
-> Child process (13861) exited due to SIGSEGV.
----------
-=================================================
-TEST 21: Transfer threads between schedulers (stopped)
-
-Create a number of threads, then set_scheduler() and see if 
-they transfer properly.
-
-
-
-
-
-----------
-Reference:
-----------
-Creating LWPS
-Setting the scheduler.
-Launching LWPS
-    1
-         2
-              3
-                   4
-                        5
-         2
-              3
-                   4
-                        5
-              3
-                   4
-                        5
-                   4
-                        5
-                        5
-Back from LWPS.
-----------
-Submitted:
-----------
-Creating LWPS
-Setting the scheduler.
-Launching LWPS
-Back from LWPS.
-
----------------------------------
-Differences (< reference > output)
----------------------------------
-
-4,18d3
-<     1
-<          2
-<               3
-<                    4
-<                         5
-<          2
-<               3
-<                    4
-<                         5
-<               3
-<                    4
-<                         5
-<                    4
-<                         5
-<                         5
+> Child process (23425) exited due to SIGSEGV.
 ---------
 =================================================
 TEST 22: Transfer threads between schedulers (live)
@@ -178,8 +117,7 @@ Back from LWPS.
 ----------
 Submitted:
 ----------
-Child process (13921) exited due to SIGSEGV.
-
+^C
 ---------------------------------
 Differences (< reference > output)
 ---------------------------------
@@ -220,7 +158,8 @@ Differences (< reference > output)
 <                         5
 < Back from LWPS.
 ---
-> Child process (13921) exited due to SIGSEGV.
+> ^C
+\ No newline at end of file
 ---------
 =================================================
 TEST 23: Sched->next() returns NULL to lwp_yield()
@@ -405,12 +344,16 @@ Launching LWPS
 (first->next())
                         5
 Setting the scheduler.
+(first->next())
+Admitting new thread to Second scheduler
+Removing thread from First scheduler
+(first->next())
 (second->next())
-                        5
+    1
 (second->next())
-                        5
+    1
 (second->next())
-                        5
+    1
 (second->next())
 Removing thread from Second scheduler
 (second->next())
@@ -422,8 +365,14 @@ Differences (< reference > output)
 
 1d0
 < init: called on first scheduler
-40,65d38
+40d38
 < init: called on second scheduler
+42,45d39
+< Removing thread from First scheduler
+< Admitting new thread to Second scheduler
+< (first->next())
+< Removing thread from First scheduler
+47,53d40
 < (first->next())
 < Removing thread from First scheduler
 < Admitting new thread to Second scheduler
@@ -431,43 +380,37 @@ Differences (< reference > output)
 < Removing thread from First scheduler
 < Admitting new thread to Second scheduler
 < (first->next())
-< Removing thread from First scheduler
+55d41
 < Admitting new thread to Second scheduler
-< (first->next())
-< Removing thread from First scheduler
-< Admitting new thread to Second scheduler
-< (first->next())
-< Removing thread from First scheduler
-< Admitting new thread to Second scheduler
-< (first->next())
+57d42
 < shutdown: called on first scheduler
-< (second->next())
-<     1
-< (second->next())
-<          2
-< (second->next())
-<               3
-< (second->next())
-<                    4
-69,76d41
-<     1
-< (second->next())
+61,68d45
 <          2
 < (second->next())
 <               3
 < (second->next())
 <                    4
 < (second->next())
-79,86d43
-<     1
+<                         5
 < (second->next())
+71,78d47
 <          2
 < (second->next())
 <               3
 < (second->next())
 <                    4
 < (second->next())
-91,98d47
+<                         5
+< (second->next())
+81,96d49
+<          2
+< (second->next())
+<               3
+< (second->next())
+<                    4
+< (second->next())
+<                         5
+< (second->next())
 < Removing thread from Second scheduler
 < (second->next())
 < Removing thread from Second scheduler
@@ -1270,12 +1213,9 @@ Launching LWPS
                                             9
 Checking thread IDs...
   tid2thread() returned the wrong pointer (tid=1)
-  tid2thread() returned the wrong pointer (tid=2)
   tid2thread() returned the wrong pointer (tid=3)
   tid2thread() returned the wrong pointer (tid=4)
   tid2thread() returned the wrong pointer (tid=5)
-  tid2thread() returned the wrong pointer (tid=6)
-  tid2thread() returned the wrong pointer (tid=7)
   tid2thread() returned the wrong pointer (tid=8)
 ...done.
 
@@ -1283,13 +1223,10 @@ Checking thread IDs...
 Differences (< reference > output)
 ---------------------------------
 
-387a388,395
+387a388,392
 >   tid2thread() returned the wrong pointer (tid=1)
->   tid2thread() returned the wrong pointer (tid=2)
 >   tid2thread() returned the wrong pointer (tid=3)
 >   tid2thread() returned the wrong pointer (tid=4)
 >   tid2thread() returned the wrong pointer (tid=5)
->   tid2thread() returned the wrong pointer (tid=6)
->   tid2thread() returned the wrong pointer (tid=7)
 >   tid2thread() returned the wrong pointer (tid=8)
 ---------
