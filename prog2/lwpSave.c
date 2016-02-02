@@ -20,6 +20,19 @@ thread systemThread = NULL;
 tid_t nextTid = 1;
 thread curThread = NULL;
 
+void printStack(thread t) {
+    printf("STACK: pos %p\n", t->stack);
+    printf("\t%lu\n", t->stack[0]);
+    printf("\t%lu\n", t->stack[-1]);
+    printf("\t%lu\n", t->stack[-2]);
+}
+
+void printThreads(thread cur, tid_t last) {
+    if (!cur || cur->tid < last) return;
+    printf("\tthread %ld\n", cur->tid);
+    printThreads(cur->nextThread, cur->tid);
+}
+
 void rr_admit(thread newThread) {
     if (systemThread->firstContext == NULL) {
         systemThread->firstContext = systemThread->lastContext = newThread;
@@ -36,26 +49,17 @@ void rr_admit(thread newThread) {
 }
 
 void rr_remove(thread victim) {
-    victim->lastThread->nextThread = victim->nextThread;
-    victim->nextThread->lastThread = victim->lastThread;
-    if (victim == systemThread->firstContext) {
-        if (victim->nextThread != victim)
-            systemThread->nextThread = systemThread->firstContext = 
-                    victim->nextThread;
-        else
-            systemThread->nextThread = systemThread->firstContext =
-                    systemThread->lastThread = NULL;
+    if (victim->lastThread != NULL) {
+        victim->lastThread->nextThread = victim->nextThread;
     }
+    if (victim->nextThread != NULL) {
+        victim->nextThread->lastThread = victim->lastThread;
+    }
+    // free(victim);  ??
 }
 
 thread rr_next() {
-    /*
-    if (!curThread)
-        return NULL;
-    curThread = curThread->nextThread;
-    return curThread;
-    */
-    return curThread ? curThread->nextThread : NULL;
+    return curThread->nextThread;
 }
 
 tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
@@ -63,6 +67,7 @@ tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
     unsigned long *sp = stack + stackSize - 1;
     rfile state;
     thread threadSpace = malloc(sizeof(context));
+    context newContext;
 
     if (currentScheduler == NULL) {
         currentScheduler = rrScheduler;
@@ -79,10 +84,9 @@ tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
     state.rsp = state.rbp = (unsigned long) sp;
     state.rdi = (unsigned long) arg;
 
-    threadSpace->tid = nextTid++;
-    threadSpace->stack = stack;
-    threadSpace->stacksize = stackSize;
-    threadSpace->state = state;
+    newContext = (context) {nextTid++, stack, stackSize, state, NULL, NULL,
+            NULL, NULL};
+    memcpy(threadSpace, &newContext, sizeof(context));
     threadSpace->state.fxsave = FPU_INIT;
     currentScheduler->admit(threadSpace);
     return threadSpace->tid;
@@ -90,18 +94,21 @@ tid_t lwp_create(lwpfun func, void *arg, size_t stackSize) {
 
 void lwp_exit() {
     thread next;
+    thread cur;
 
     currentScheduler->remove(curThread);
     next = currentScheduler->next();
+    cur = curThread;
 
-    if (next == NULL || curThread == next) { 
+    if (next == NULL) { // used to have if curThread == next
         return lwp_stop();
     }
-    SetSP(next->state.rsp);
-    free(curThread->stack);
-    curThread = next;
-    //free(curThread);
-    load_context(&next->state);
+    //curThread->lastThread->nextThread = next;
+    //next->lastThread = curThread->lastThread;
+    // need to check first/lastContext in scheduler?
+    switchContext(next);
+    free(cur->stack);
+    free(cur);
 }
 
 tid_t lwp_gettid() {
@@ -111,8 +118,7 @@ tid_t lwp_gettid() {
 }
 
 void lwp_stop() {
-    systemThread->nextThread = curThread->nextThread;
-    switchContext(systemThread);
+    load_context(&systemThread->state);
 }
 
 scheduler lwp_get_scheduler() {
@@ -149,19 +155,14 @@ void lwp_start() {
 }
 
 thread tid2thread(tid_t tid) {
-    thread nextThrd = currentScheduler->next();
-    if (nextThrd)
-        return tid2threadHelper(nextThrd, tid, nextThrd->tid, 0);
-    else return NULL;
+    return tid2threadHelper(systemThread->firstContext, tid);
 }
 
-thread tid2threadHelper(thread cur, tid_t tid, tid_t seen, int itr) {
-    /* TODO I think this actually might go forever if tid isnt in pool */
-    if (cur == NULL ||  (itr > 0 && cur->tid == seen)) {
+thread tid2threadHelper(thread cur, tid_t tid) {
+    if (cur == NULL)
         return NULL;
-    } else if (cur->tid == tid) {
+    else if (cur->tid == tid)
         return cur;
-    } else {
-        return tid2threadHelper(currentScheduler->next(), tid, seen, itr+1);
-    }
+    else
+        return tid2threadHelper(cur->nextThread, tid);
 }

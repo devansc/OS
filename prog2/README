@@ -1,0 +1,7 @@
+Devan Carlson
+
+Wanted to figure out what was wrong with the Semaphore test, but couldn't
+figure out why it wasn't working without the semaphore's source code. It's 
+hard to run gdb without being able to compile something with source code...
+
+Hope 26/27 gets a decent enough grade :)
