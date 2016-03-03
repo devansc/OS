@@ -1,0 +1,8 @@
+Transfer threads between schedulers (live)
+
+Create a number of threads, start them running,
+then set_scheduler() and see if they transfer properly.
+
+
+
+

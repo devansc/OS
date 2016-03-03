@@ -1,0 +1,3 @@
+Call malloc() a few times
+
+Test malloc() to see if it can properly allocate a few regions.

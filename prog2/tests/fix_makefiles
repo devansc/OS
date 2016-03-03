@@ -1,0 +1,12 @@
+#!/bin/csh -f
+
+echo "Fixing all the makefiles to make the names right"
+
+foreach d ( [0-9]* skip* )
+   set m=$d/Makefile
+   perl -ne 'if ( $_ =~ /^PROG\s*=/ ) {print "PROG = '$d:t'\n";} else {print;}' $m > $m.new
+   mv $m $m.old
+   mv $m.new $m
+   echo $d
+end
+

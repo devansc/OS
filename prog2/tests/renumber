@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+$num = 1;
+foreach $d ( glob "[0-9][0-9]*" ) {
+    if ( $d =~ /^(\d+)(.*)$/ ) {
+	$new = sprintf ("%02d%s",$num,$2);
+	if ( "$d" ne "$new") {
+	    rename($d,$new);
+	}
+	$num++;
+    }
+
+}

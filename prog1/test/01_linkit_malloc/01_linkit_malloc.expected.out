@@ -1,0 +1,5 @@
+Required functions:
+  malloc()...found.
+  calloc()...found.
+ realloc()...found.
+    free()...found.

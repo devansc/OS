@@ -1,0 +1,4 @@
+Check the alignment of malloc()'s results
+
+Call malloc() a lot of times with different sizes and see if they all
+come back aligned.

@@ -6,55 +6,28 @@ LD 	= gcc
 
 LDFLAGS  = -Wall -g -L.
 
-PUBFILES =  README  hungrymain.c  libPLN.a  libsnakes.a  lwp.h\
-	    numbersmain.c  snakemain.c  snakes.h
+PROGS	= liblwp.so
 
-TARGET =  pn-cs453@hornet:Given/asgn2
+PROGOBJS  = lwp.o scheduler.o
 
-PROGS	= snakes nums hungry
-
-SNAKEOBJS  = snakemain.o 
-
-HUNGRYOBJS = hungrymain.o 
-
-NUMOBJS    = numbersmain.o
-
-OBJS	= $(SNAKEOBJS) $(HUNGRYOBJS) $(NUMOBJS) 
-
-SRCS	= snakemain.c numbersmain.c
-
-HDRS	= 
-
-EXTRACLEAN = core $(PROGS)
+OBJS	= $(PROGOBJS) 
 
 all: 	$(PROGS)
 
-allclean: clean
-	@rm -f $(EXTRACLEAN)
-
 clean:	
-	rm -f $(OBJS) *~ TAGS
+	rm -f $(OBJS) *~ TAGS liblwp.so
 
-snakes: snakemain.o libPLN.a libsnakes.a
-	$(LD) $(LDFLAGS) -o snakes snakemain.o -L. -lncurses -lsnakes -lPLN
+nums: numbersmain.o liblwp.so lwp.o
+	$(LD) $(LDFLAGS) -o nums numbersmain.o -L. -llwp
 
-hungry: hungrymain.o libPLN.a libsnakes.a
-	$(LD) $(LDFLAGS) -o hungry hungrymain.o -L. -lncurses -lsnakes -lPLN
+numbermain.o: lwp.h numbersmain.c
+	$(LD) $(LDFLAGS) -c numbersmain.c
 
-nums: numbersmain.o libPLN.a 
-	$(LD) $(LDFLAGS) -o nums numbersmain.o -L. -lPLN
+liblwp.so: lwp.h lwp.c scheduler.c
+	gcc -g -c -fPIC lwp.c magic64.S scheduler.c
+	gcc -g -shared -fPIC -o liblwp.so lwp.o magic64.S scheduler.o
 
-hungrymain.o: lwp.h snakes.h
-
-snakemain.o: lwp.h snakes.h
-
-numbermain.o: lwp.h
-
-#libPLN.a: ../Publish/lwp.c
-#	gcc -c ../Publish/lwp.c
-#	ar r libPLN.a lwp.o
+#libLWP.a: lwp.h lwp.c
+#	gcc -c -g lwp.c magic64.S
+#	ar r libLWP.a lwp.o magic64.o
 #	rm lwp.o
-
-pub:
-	scp $(PUBFILES) $(TARGET)
-

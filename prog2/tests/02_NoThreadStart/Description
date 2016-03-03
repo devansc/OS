@@ -1,0 +1,4 @@
+start() with no threads
+
+This test calls lwp_start() without having created any threads
+

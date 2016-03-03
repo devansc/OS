@@ -1,0 +1,67 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2015.03.26.16.57.52;	author pnico;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.04.07.19.19.52;	author pnico;	state Exp;
+branches;
+next	;
+
+
+desc
+@Changed new_lwp() to lwp_create()
+@
+
+
+1.2
+log
+@cleaning up warnings about size
+@
+text
+@#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <lwp.h>
+
+#define STACKSIZE 8096
+
+static void counter(long num)
+{
+  if ( num ) {
+    lwp_create((lwpfun)counter,(void*)num-1,STACKSIZE);
+    printf("%ld\n",num);
+  } else {
+    printf("Bye\n");
+  }
+  lwp_exit();
+}
+
+
+int main() {
+  lwp_create((lwpfun)counter,(void*)100,STACKSIZE);
+  lwp_start();
+  exit(0);
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d8 1
+a8 1
+static void counter(int num)
+d12 1
+a12 1
+    printf("%d\n",num);
+@

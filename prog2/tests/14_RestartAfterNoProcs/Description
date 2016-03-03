@@ -1,0 +1,4 @@
+Five lwps, all exit, recreate then call start
+
+Creates five lwps each of which eventually exits.  After exiting,
+main() recreates them and calls start again()

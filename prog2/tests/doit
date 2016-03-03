@@ -1,0 +1,7 @@
+foreach f ( `grep -l new_lwp */*.[ch]` )
+  mv $f $f.old
+  sed 's/new_lwp/lwp_create/g' $f.old > $f
+  echo "Changed new_lwp() to lwp_create()" | ci -u $f
+  echo $f
+end
+

@@ -1,0 +1,9 @@
+Does tid2thread return the right thread?
+
+This is the similar numbersmain program distributed with the
+assignment, but with a scheduler that returns a random thread.
+(seeded, so reproducible).  After 50 iterations, the last thread runs
+through the list of all threads and sees if tid2thread is returning
+the right context.
+
+

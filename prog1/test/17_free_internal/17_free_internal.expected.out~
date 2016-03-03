@@ -1,0 +1,4 @@
+Calling malloc succeeded.
+Successfully used the space.
+Allocated 1024 bytes.  Freeing val+512.
+We survived the free call.

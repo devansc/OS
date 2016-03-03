@@ -1,0 +1,8 @@
+Transfer threads between schedulers check for init/shutdown
+
+Create a number of threads, start them running,
+then set_scheduler() and see if they transfer properly.
+
+
+
+

@@ -1,0 +1,6 @@
+Free(NULL) a bunch then malloc()
+
+Call free(NULL) to check for survivability.  malloc() afterwards to 
+verify.
+
+

@@ -59,7 +59,7 @@ typedef struct scheduler {
   void   (*shutdown)(void);        /* tear down any structures      */
   void   (*admit)(thread new);     /* add a thread to the pool      */
   void   (*remove)(thread victim); /* remove a thread from the pool */
-  thread (*next)(void);            /* select a thread to schedule   */
+  thread (*next)();                /* select a thread to schedule   */
 } *scheduler;
 
 /* lwp functions */
@@ -72,6 +72,12 @@ extern void  lwp_stop(void);
 extern void  lwp_set_scheduler(scheduler fun);
 extern scheduler lwp_get_scheduler(void);
 extern thread tid2thread(tid_t tid);
+
+void rr_admit(thread newThread);
+void rr_remove(thread victim);
+thread rr_next();
+thread tid2threadHelper(thread cur, tid_t tid, tid_t seen, int itr);
+void switchContext(thread to);
 
 /* Macros for stack pointer manipulation:
  *
@@ -94,7 +100,7 @@ extern thread tid2thread(tid_t tid);
 #endif
 
 /* prototypes for asm functions */
-#define load_context(c) (swap_rfiles(NULL,c))
+#define load_context(c) (swap_rfiles(NULL,c)) 
 #define save_context(c) (swap_rfiles(c,NULL))
 void swap_rfiles(rfile *, rfile *to);
 

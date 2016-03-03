@@ -1,0 +1,32 @@
+-------------------------
+Thu Mar 26 10:45:42 2015:
+-------------------------
+
+Add a test that does a transfer between schedulers
+
+   DONE
+
+and rehabilitate skip-14 into something that uses the entire stack.
+
+    * What was the problem with test 14?  
+       (100 threads with a minimal stack.  Just return.)  
+      Seems ok at the moment.
+
+      Wait... the problem is that we have to be able to call the
+      scheduler and lwp_exit(), so the stack needs to be a little bigger. 
+      But how big?
+
+    DONE (I think):  Made the stack all of 40 words.  This should
+    be big enough to call lwp_exit(), but still cause problems if
+    they're allocating wrongly.      
+
+=====================================================================
+Proposed tests:
+	 new Given lwp.h
+	 new Publish version
+
+	 check that lwp_yield(), start(), and exit() do the right thign
+	 if the scheduler returns NULL.
+
+	 try calling lwp_exit() with a scheduler that insists that you
+	 run the calling thread

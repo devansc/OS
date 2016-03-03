@@ -1,21 +1,7 @@
-To compile the three test programs, be sure to link them with the 
-appropriate libraries:
+Devan Carlson
 
-  threaded counting:
+Wanted to figure out what was wrong with the Semaphore test, but couldn't
+figure out why it wasn't working without the semaphore's source code. It's 
+hard to run gdb without being able to compile something with source code...
 
-    gcc -o nums numbersmain.c -L. -lPLN -lsnakes
-
-  hungrysnakes:
-
-    gcc -o hs hungrymain.c -L. -lPLN -lsnakes -lncurses
-
-  randomsnakes:
-
-    gcc -o rs snakemain.c -L. -lPLN -lsnakes -lncurses
-
-Each of the snake programs installs signal handlers such that
-SIGINT (^C) will kill a snake, and SIGQUIT (^\) will terminate
-threading.
-
-
-
+Hope 26/27 gets a decent enough grade :)

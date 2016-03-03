@@ -1,0 +1,4 @@
+One lwp, calling exit()
+
+This test spawns a single thread that prints a message then calls
+exit.

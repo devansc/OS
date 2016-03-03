@@ -1,0 +1,69 @@
+=================================================
+TEST 19: Ping pong with semaphores
+
+20 threads each of which either Pings or Pongs twice synchronized
+by a scheduler that supports semaphores.
+
+
+
+
+----------
+Reference:
+----------
+Spawining threads. (20)
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+   Ping...pong.
+Done.
+----------
+Submitted:
+----------
+Child process (2525) exited due to SIGSEGV.
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,22c1
+< Spawining threads. (20)
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+<    Ping...pong.
+< Done.
+---
+> Child process (2525) exited due to SIGSEGV.
+---------

@@ -1,0 +1,4 @@
+Call malloc() and free() 10000000 times
+
+Make sure that these programs aren't just leaking memory like
+the proverbial sieve.

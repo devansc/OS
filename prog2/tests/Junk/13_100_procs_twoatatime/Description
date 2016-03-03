@@ -1,0 +1,5 @@
+Two Lwps. spawn then exits 50 times.
+
+Two threads creates new ones, then exits.
+
+

@@ -1,0 +1,4 @@
+Ten lwps, yields, and returns
+
+This test spawns several threads that prints a message, yields
+to itself, then returns

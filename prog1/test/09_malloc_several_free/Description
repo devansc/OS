@@ -1,0 +1,2 @@
+Call malloc() a few times then free all the regions
+

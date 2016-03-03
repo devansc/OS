@@ -1,0 +1,3 @@
+Call malloc() once without using the returned space.
+
+Quick non-bogosity test.
