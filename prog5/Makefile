@@ -1,5 +1,5 @@
 CC = gcc
-ARGS = 
+ARGS = -g
 
 all: minls minget
 

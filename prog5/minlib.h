@@ -90,7 +90,7 @@ typedef struct image {
     
     SuperBlock superBlock;
     uint64_t startOfPartition;
-    int zonesize;
+    uint32_t zonesize;
 } Image;
 
 typedef struct file {

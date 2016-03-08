@@ -72,8 +72,8 @@ File getFile(Image image, char *path, INode inode) {
     return getFile(image, path, getNextINode(image, inode, nextFileName));
 }
 
-int *createZoneSizes(int zoneSize, int lenData) {
-    int *zoneSizes = (int *) malloc(DIRECT_ZONES);
+int *createZoneSizes(int sizeZone, int lenData, int numTotalZones) {
+    int *zoneSizes = (int *) calloc(1, numTotalZones);
     int lenCurZone;
 
     if (zoneSizes == NULL) {
@@ -81,8 +81,8 @@ int *createZoneSizes(int zoneSize, int lenData) {
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < DIRECT_ZONES && lenData > 0; i++) {
-        lenCurZone = lenData > zoneSize ? zoneSize : lenData;
+    for (int i = 0; i < numTotalZones && lenData > 0; i++) {
+        lenCurZone = lenData > sizeZone ? sizeZone : lenData;
         zoneSizes[i] = lenCurZone;
         lenData -= lenCurZone;
     }
@@ -90,7 +90,7 @@ int *createZoneSizes(int zoneSize, int lenData) {
 }
 
 char *getZone(Image image, int zoneNumber, int len) {
-    char *zone = (char *) malloc(len);
+    char *zone = (char *) calloc(1, len);
     uint64_t position = image.startOfPartition + image.zonesize * zoneNumber;
     
     if (zone == NULL) {
@@ -98,34 +98,56 @@ char *getZone(Image image, int zoneNumber, int len) {
         exit(EXIT_FAILURE);
     }
 
+    if (zoneNumber == 0) { /* hole */
+        memset((void *) zone, len, 0);
+        return zone;
+    }
     goToLoc(image, position);
     readBytesFromImage(image, (void *) zone, len, 
      "An error occured reading the filesystem.\n");
     return zone;
 }
 
+uint32_t getDataFromZones(Image image, char *fileData, int numZones, uint32_t *zones, uint32_t lenData, uint32_t *position) {
+    int *zoneSizes = createZoneSizes(image.zonesize, lenData, numZones);
+    int i;
+    char *zone;
+    
+    for (i = 0; zoneSizes[i] != 0; i++) {
+        zone = getZone(image, zones[i], zoneSizes[i]);
+        memcpy(fileData + *position, zone, zoneSizes[i]);
+        *position += zoneSizes[i];
+        free(zone);
+        lenData -= zoneSizes[i];
+    }
+
+    free(zoneSizes);
+    return lenData;
+}
+
 char *getFileData(Image image, INode inode) {
     uint32_t lenData = inode.size;
-    int numZones = lenData / image.zonesize + 
-     lenData % image.zonesize ? 1 : 0;
-    int i;
-    char *fileData = (char *) malloc(lenData);
-    int *zoneSizes = createZoneSizes(image.zonesize, lenData);
-    int position = 0;
+    char *fileData = (char *) malloc(inode.size);
+    uint32_t position = 0;
+    uint32_t *indirectZones;
 
     if (fileData == NULL) {
         fprintf(stderr, "Program ran out of memory.\n");
         exit(EXIT_FAILURE);
     }
 
-    for (i = 0; i < DIRECT_ZONES && inode.zone[i] != 0; i++) {
-        char *zone = getZone(image, inode.zone[i], zoneSizes[i]);
-        memcpy(fileData + position, zone, zoneSizes[i]);
-        position += zoneSizes[i];
-        free(zone);
+    /* Go through direct zones */
+    lenData = getDataFromZones(image, fileData, DIRECT_ZONES, inode.zone, 
+     lenData, &position);
+    
+    if (lenData > 0) {
+        indirectZones = (uint32_t *) getZone(image, inode.indirect, image.zonesize);
+        lenData = getDataFromZones(image, fileData, 
+         image.zonesize / sizeof(uint32_t), indirectZones, lenData, &position);
     }
-    if (numZones > i) {
-        printf("Warning, did not get all data from file, wanted %d zones\n", numZones);
+
+    if (lenData > 0) {
+        printf("Warning, did not get all data from file, missing %u bytes\n", lenData);
     }
     return fileData;
 }
