@@ -88,18 +88,20 @@ int parseOptions(int argc, char **argv, Image *image) {
 			break;
 
 		case 'p':
-			if ((image->partition = (int) strtol(optarg, NULL, 10)) < 0 || 
-             errno == EINVAL) {
-				fprintf(stderr, "Partion must be a positive integer\n");
+			if ((image->partition = (int) strtol(optarg, NULL, 10))
+             < 0 || errno == EINVAL) {
+				fprintf(stderr, 
+                 "Partion must be a positive integer\n");
 				exit(EXIT_FAILURE);
 			} 
             pFlag = TRUE;
 			break;
 
 		case 's':
-			if ((image->subpartition = (int) strtol(optarg, NULL, 10)) < 0 || 
-             errno == EINVAL) {
-				fprintf(stderr, "Subpartion must be a positive integer\n");
+            image->subpartition = (int) strtol(optarg, NULL, 10);
+			if (image->subpartition < 0 || errno == EINVAL) {
+				fprintf(stderr, 
+                 "Subpartion must be a positive integer\n");
 				exit(1);
 			}
 			if (!pFlag) {

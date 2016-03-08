@@ -44,10 +44,12 @@ void printls(Image image, File foundFile, char *path) {
             printf("%4d     %s\n", dirent->inode, dirent->name);
             */
             inode = getINode(image, dirent->inode);
-            printf("%s %9u %s\n", getModeString(inode.mode), inode.size, dirent->name);
+            printf("%s %9u %s\n", getModeString(inode.mode), inode.size, 
+             dirent->name);
         }
     } else {
-        printf("%s %9u %s\n", getModeString(foundFile.mode), foundFile.size, path);
+        printf("%s %9u %s\n", getModeString(foundFile.mode), foundFile.size, 
+         path);
     }
 }
 
@@ -96,18 +98,20 @@ int parseOptions(int argc, char **argv, Image *image) {
 			break;
 
 		case 'p':
-			if ((image->partition = (int) strtol(optarg, NULL, 10)) < 0 || 
-             errno == EINVAL) {
-				fprintf(stderr, "Partion must be a positive integer\n");
+            image->partition = (int) strtol(optarg, NULL, 10);
+			if (image->partition < 0 || errno == EINVAL) {
+				fprintf(stderr, 
+                 "Partion must be a positive integer\n");
 				exit(EXIT_FAILURE);
 			} 
             pFlag = TRUE;
 			break;
 
 		case 's':
-			if ((image->subpartition = (int) strtol(optarg, NULL, 10)) < 0 || 
-             errno == EINVAL) {
-				fprintf(stderr, "Subpartion must be a positive integer\n");
+            image->subpartition = (int) strtol(optarg, NULL, 10);
+			if (image->subpartition < 0 || errno == EINVAL) {
+				fprintf(stderr, 
+                 "Subpartion must be a positive integer\n");
 				exit(1);
 			}
 			if (!pFlag) {

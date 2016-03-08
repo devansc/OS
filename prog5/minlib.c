@@ -15,7 +15,8 @@ void openImageFile(Image *image) {
     }
 }
 
-void readBytesFromImage(Image image, void *buffer, int len, const char *errorMessage) {
+void readBytesFromImage(Image image, void *buffer, int len, 
+ const char *errorMessage) {
     int res = fread(buffer, len, 1, image.file);
     if (ferror(image.file) || res != 1) {
         fprintf(stderr, errorMessage);
@@ -74,14 +75,14 @@ File getFile(Image image, char *path, INode inode) {
 
 int *createZoneSizes(int sizeZone, int lenData, int numTotalZones) {
     int *zoneSizes = (int *) calloc(1, numTotalZones);
-    int lenCurZone;
+    int lenCurZone, i;
 
     if (zoneSizes == NULL) {
         fprintf(stderr, "Program ran out of memory\n");
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < numTotalZones && lenData > 0; i++) {
+    for (i = 0; i < numTotalZones && lenData > 0; i++) {
         lenCurZone = lenData > sizeZone ? sizeZone : lenData;
         zoneSizes[i] = lenCurZone;
         lenData -= lenCurZone;
@@ -108,7 +109,8 @@ char *getZone(Image image, int zoneNumber, int len) {
     return zone;
 }
 
-uint32_t getDataFromZones(Image image, char *fileData, int numZones, uint32_t *zones, uint32_t lenData, uint32_t *position) {
+uint32_t getDataFromZones(Image image, char *fileData, int numZones, 
+ uint32_t *zones, uint32_t lenData, uint32_t *position) {
     int *zoneSizes = createZoneSizes(image.zonesize, lenData, numZones);
     int i;
     char *zone;
@@ -141,13 +143,15 @@ char *getFileData(Image image, INode inode) {
      lenData, &position);
     
     if (lenData > 0) {
-        indirectZones = (uint32_t *) getZone(image, inode.indirect, image.zonesize);
+        indirectZones = (uint32_t *) getZone(image, inode.indirect, 
+         image.zonesize);
         lenData = getDataFromZones(image, fileData, 
          image.zonesize / sizeof(uint32_t), indirectZones, lenData, &position);
     }
 
     if (lenData > 0) {
-        printf("Warning, did not get all data from file, missing %u bytes\n", lenData);
+        printf("Warning, did not get all data from file, missing %u"
+         " bytes\n", lenData);
     }
     return fileData;
 }
