@@ -33,6 +33,8 @@ char * getModeString(uint16_t mode) {
 }
 
 void printINode(INode in) {
+    int i;
+
     printf("\n");
     printf("File inode:\n");
     printf("  uint16_t mode %12dx%.4x (%s)\n", 0, in.mode, 
@@ -47,7 +49,7 @@ void printINode(INode in) {
     printf("\n");
 
     printf("Direct zones:\n");
-    for (int i = 0; i < DIRECT_ZONES; i++) {
+    for (i = 0; i < DIRECT_ZONES; i++) {
         printf("           zone[%d]   = %15d\n", i, in.zone[i]);
     }
     printf("  uint32_t indirect %18d\n", in.indirect);
