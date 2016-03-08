@@ -74,7 +74,7 @@ File getFile(Image image, char *path, INode inode) {
 }
 
 int *createZoneSizes(int sizeZone, int lenData, int numTotalZones) {
-    int *zoneSizes = (int *) calloc(1, numTotalZones);
+    int *zoneSizes = (int *) calloc(numTotalZones, sizeof(int));
     int lenCurZone, i;
 
     if (zoneSizes == NULL) {
@@ -115,12 +115,12 @@ uint32_t getDataFromZones(Image image, char *fileData, int numZones,
     int i;
     char *zone;
     
-    for (i = 0; zoneSizes[i] != 0; i++) {
+    for (i = 0; i < numZones && zoneSizes[i] != 0; i++) {
         zone = getZone(image, zones[i], zoneSizes[i]);
         memcpy(fileData + *position, zone, zoneSizes[i]);
         *position += zoneSizes[i];
-        free(zone);
         lenData -= zoneSizes[i];
+        free(zone);
     }
 
     free(zoneSizes);
@@ -131,7 +131,8 @@ char *getFileData(Image image, INode inode) {
     uint32_t lenData = inode.size;
     char *fileData = (char *) malloc(inode.size);
     uint32_t position = 0;
-    uint32_t *indirectZones;
+    uint32_t *indirectZones, *doublyIndirectZones;
+    int i, numZonesInIndirect = image.zonesize / sizeof(uint32_t);
 
     if (fileData == NULL) {
         fprintf(stderr, "Program ran out of memory.\n");
@@ -142,11 +143,24 @@ char *getFileData(Image image, INode inode) {
     lenData = getDataFromZones(image, fileData, DIRECT_ZONES, inode.zone, 
      lenData, &position);
     
+    /* Go through indirect zones */
     if (lenData > 0) {
         indirectZones = (uint32_t *) getZone(image, inode.indirect, 
          image.zonesize);
         lenData = getDataFromZones(image, fileData, 
-         image.zonesize / sizeof(uint32_t), indirectZones, lenData, &position);
+         numZonesInIndirect, indirectZones, lenData, &position);
+    }
+    /* Go through doubly indirect zones */
+    if (lenData > 0) {
+        
+        doublyIndirectZones = (uint32_t *) getZone(image, inode.two_indirect, 
+         image.zonesize);
+        for (i = 0; i < numZonesInIndirect && lenData > 0; i++) {
+            indirectZones = (uint32_t *) getZone(image, doublyIndirectZones[i],
+              image.zonesize);
+            lenData = getDataFromZones(image, fileData, numZonesInIndirect, 
+             indirectZones, lenData, &position);
+        }
     }
 
     if (lenData > 0) {

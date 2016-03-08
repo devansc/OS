@@ -37,15 +37,13 @@ void printls(Image image, File foundFile, char *path) {
     INode inode;
     
     if (foundFile.isDir) {
-
+        printf("%s:\n", path == NULL ? "/" : path);
         dirent = (DirEnt *) foundFile.data;
         for ( ; posData < foundFile.size; posData += DIRENT_SIZE, dirent++) {
-            /*
-            printf("%4d     %s\n", dirent->inode, dirent->name);
-            */
             inode = getINode(image, dirent->inode);
-            printf("%s %9u %s\n", getModeString(inode.mode), inode.size, 
-             dirent->name);
+            if (dirent->inode != 0)
+                printf("%s %9u %s\n", getModeString(inode.mode), inode.size, 
+                 dirent->name);
         }
     } else {
         printf("%s %9u %s\n", getModeString(foundFile.mode), foundFile.size, 
