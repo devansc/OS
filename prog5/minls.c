@@ -19,10 +19,11 @@ int main(int argc, char **argv) {
     openPartitions(&image);
     openSuperBlock(&image);
 
+    root = getINode(image, 1);
     if (image.path && strlen(image.path) > 0) {
-        foundFile = getFile(image, strdup(image.path), getINode(image, 1));
+        foundFile = getFile(image, strdup(image.path), root);
     } else {
-        foundFile = createFile(image, getINode(image, 1));
+        foundFile = createFile(image, root);
     }
 
     printls(image, foundFile, image.path);
@@ -36,6 +37,7 @@ void printls(Image image, File foundFile, char *path) {
     INode inode;
     
     if (foundFile.isDir) {
+
         dirent = (DirEnt *) foundFile.data;
         for ( ; posData < foundFile.size; posData += DIRENT_SIZE, dirent++) {
             /*

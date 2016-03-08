@@ -1,6 +1,9 @@
 #ifndef MINLIB_H
 #define MINLIB_H
 #include <stdint.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #define PARTITION_TABLE_LOC 0x1BE
 #define MINIX_PARTITION_TYPE 0x81
@@ -118,6 +121,9 @@ void parseArgs(int argc, char **argv, Image *image, int indexParameter);
 int parseOptions(int argc, char **argv, Image *image);
 char *getFileData(Image image, INode inode);
 
+
+/* For minget */
+void printFile(File foundFile, char *path);
 
 /* For minls */
 void printls(Image image, File foundFile, char *path);

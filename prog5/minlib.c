@@ -144,6 +144,7 @@ INode getINode(Image image, int number) {
     /* Go to correct iNode # */
     diskPosition += (number - 1) * sizeof(INode);
 
+    /*printf("in getINode getting position %" PRIu64 "\n", diskPosition);*/
     goToLoc(image, diskPosition);
     readBytesFromImage(image, (void *) &inode, sizeof(INode), 
      "Trouble finding INode\n");
