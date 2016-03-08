@@ -74,14 +74,14 @@ File getFile(Image image, char *path, INode inode) {
 
 int *createZoneSizes(int zoneSize, int lenData) {
     int *zoneSizes = (int *) malloc(DIRECT_ZONES);
-    int lenCurZone;
+    int lenCurZone, i;
 
     if (zoneSizes == NULL) {
         fprintf(stderr, "Program ran out of memory\n");
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < DIRECT_ZONES && lenData > 0; i++) {
+    for (i = 0; i < DIRECT_ZONES && lenData > 0; i++) {
         lenCurZone = lenData > zoneSize ? zoneSize : lenData;
         zoneSizes[i] = lenCurZone;
         lenData -= lenCurZone;
