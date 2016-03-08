@@ -72,17 +72,17 @@ File getFile(Image image, char *path, INode inode) {
     return getFile(image, path, getNextINode(image, inode, nextFileName));
 }
 
-int *createZoneSizes(int zoneSize, int lenData) {
-    int *zoneSizes = (int *) malloc(DIRECT_ZONES);
-    int lenCurZone, i;
+int *createZoneSizes(int sizeZone, int lenData, int numTotalZones) {
+    int *zoneSizes = (int *) calloc(1, numTotalZones);
+    int lenCurZone;
 
     if (zoneSizes == NULL) {
         fprintf(stderr, "Program ran out of memory\n");
         exit(EXIT_FAILURE);
     }
 
-    for (i = 0; i < DIRECT_ZONES && lenData > 0; i++) {
-        lenCurZone = lenData > zoneSize ? zoneSize : lenData;
+    for (int i = 0; i < numTotalZones && lenData > 0; i++) {
+        lenCurZone = lenData > sizeZone ? sizeZone : lenData;
         zoneSizes[i] = lenCurZone;
         lenData -= lenCurZone;
     }
