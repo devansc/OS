@@ -91,6 +91,8 @@ typedef struct image {
     SuperBlock superBlock;
     uint64_t startOfPartition;
     uint32_t zonesize;
+
+    int fdWrite; /* fd for writing to file for minget */
 } Image;
 
 typedef struct file {
@@ -123,7 +125,7 @@ char *getFileData(Image image, INode inode);
 
 
 /* For minget */
-void printFile(File foundFile, char *path);
+void printFile(File foundFile, int writeFD, char *path);
 
 /* For minls */
 void printls(Image image, File foundFile, char *path);

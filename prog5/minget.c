@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,12 +23,12 @@ int main(int argc, char **argv) {
     root = getINode(image, 1);
     foundFile = getFile(image, strdup(image.path), root);
 
-    printFile(foundFile, image.path);
+    printFile(foundFile, image.fdWrite, image.path);
     
     return 0;
 }
 
-void printFile(File foundFile, char *path) {
+void printFile(File foundFile, int writeFD, char *path) {
     uint32_t res;
 
     if (foundFile.isDir) {
@@ -35,7 +36,7 @@ void printFile(File foundFile, char *path) {
         exit(EXIT_FAILURE);
     }
 
-    res = write(STDOUT_FD, foundFile.data, foundFile.size);
+    res = write(writeFD, foundFile.data, foundFile.size);
     if (res != foundFile.size) {
         fprintf(stderr, "Couldn't write all output... Exitting\n");
         exit(EXIT_FAILURE);
@@ -48,6 +49,7 @@ void printFile(File foundFile, char *path) {
  */
 void parseArgs(int argc, char **argv, Image *image, int indexParameter) {
     image->path = NULL;
+    image->fdWrite = STDOUT_FD;
     if (argc <= indexParameter) { /* missing imagefile */
         printUsageAndExit();
     } else {
@@ -56,12 +58,22 @@ void parseArgs(int argc, char **argv, Image *image, int indexParameter) {
         indexParameter++;
     }
 
-    if (argc > indexParameter + 1) { /* too many args */
-        printUsageAndExit();
-    } 
-    if (argc == indexParameter + 1) { 
+    if (argc > indexParameter) { 
         image->path = (char *) malloc(strlen(argv[indexParameter]) + 1);
         strcpy(image->path, argv[indexParameter]);
+        indexParameter++;
+    }
+
+    if (argc > indexParameter + 1) { /* too many args */
+        printUsageAndExit();
+    } else if (argc == indexParameter + 1) {
+        image->fdWrite = open(argv[indexParameter], 
+         O_WRONLY | O_TRUNC | O_CREAT);
+        if (image->fdWrite < 0) {
+            fprintf(stderr, "Could not open %s for writing.\n", 
+             argv[indexParameter]);
+            exit(EXIT_FAILURE);
+        }
     }
 }
 

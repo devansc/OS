@@ -31,6 +31,12 @@ File createFile(Image image, INode in) {
                  in.size,
                  getFileData(image, in)
                 };
+    uint16_t filemask = file.mode & FILETYPE_MASK;
+    /* make sure file is regular file or directory */
+    if (!(filemask == REGULAR_FILE_MASK || filemask == DIRECTORY_MASK)) {
+        fprintf(stderr, "This is not a regular file or directory.\n");
+        exit(EXIT_FAILURE);
+    }
     return file;
 }
 
@@ -51,7 +57,8 @@ INode getNextINode(Image image, INode inode, char *filename) {
     fileData = getFileData(image, inode);
     dirent = (DirEnt *) fileData;
     for ( ; posData < inode.size; posData += DIRENT_SIZE, dirent++) {
-        if (!strcmp(filename, dirent->name)) { /* found file */
+        if (!strcmp(filename, dirent->name) && dirent->inode != 0) { 
+            /* found file */
             return getINode(image, dirent->inode);
         }
     }
