@@ -59,7 +59,7 @@ void parseArgs(int argc, char **argv, Image *image, int indexParameter) {
     if (argc <= indexParameter) { /* missing imagefile */
         printUsageAndExit();
     } else {
-        image->imageFile = (char *) malloc(strlen(argv[indexParameter]) + 1);
+        image->imageFile = strdup(argv[indexParameter]);
         strcpy(image->imageFile, argv[indexParameter]);
         indexParameter++;
     }
@@ -68,7 +68,7 @@ void parseArgs(int argc, char **argv, Image *image, int indexParameter) {
         printUsageAndExit();
     } 
     if (argc == indexParameter + 1) { 
-        image->path = (char *) malloc(strlen(argv[indexParameter]) + 1);
+        image->path = strdup(argv[indexParameter]);
         strcpy(image->path, argv[indexParameter]);
     }
 }
